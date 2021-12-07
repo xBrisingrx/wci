@@ -1,0 +1,35 @@
+<div class="modal-body">
+    <strong>Curso:</strong>
+      <%= "#{@course.program.code} #{@course.program.name}" %>
+    </p>
+
+    <p>
+      <strong>Instructor:</strong>
+      <%= "#{@course.teacher.name} #{@course.teacher.name}" %>
+    </p>
+
+    <p>
+      <strong>Numero de inscriptos:</strong>
+      <%= @course.students.count %>
+    </p>
+    <p>
+      <strong>Comentario:</strong>
+      <%= @course.comment %>
+    </p>
+    <table id="courses-detail" class="table hover dt-responsive w-100">
+      <thead>
+        <th>Alumno</th>
+        <th>Empresa</th>
+      </thead>
+      <tbody>
+        <% @course.students.each do |student| %>
+          <tr>
+            <td> <%= student.fullname%> </td>
+            <td> <%= student.company.name%> </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+</div>
+

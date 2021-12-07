@@ -1,0 +1,20 @@
+<div class="col-6 mx-auto">
+  <div class="card mt-4 border-dark">
+    <div class="card-header">
+      <h3 class="text-center"> Curso <%= @course_student.course.program.name %> </h3>
+    </div>
+    <div class="card-body">
+      <p><b>Nombre y apellido del Alumno/Student Full Name: </b><%= "#{@course_student.student.fullname}" %></p> 
+      <p><b>Proveedor/Provider: </b>Well Control International</p> 
+      <p><b>Instructor/Instructor: </b><%= @course_student.course.teacher.name %></p> 
+      <p><b>Presencial/E-Learning: </b><%= @course_student.course.course_type.name %></p> 
+      <p><b>N de programa/Program Numbre: </b><%= @course_student.course.program.code %></p> 
+      <p><b>Fecha de finalizacion/Completion date: </b><%= @course_student.final_grade_date.strftime('%d-%m-%Y') %></p> 
+      <p><b>Fecha de vencimiento/Expiration date: </b><%= @vencimiento.strftime('%d-%m-%Y') %></p> 
+      <p><b>N de Certificado/Cartificate number: </b><%= "WC-#{@course_student.student.dni}-#{@course_student.course.program.code.split('-').last}" %></p> 
+      <% if logged_in? %>
+        <%= link_to 'Volver', course_student_path(@course_student.course_id), class: 'btn btn-info' %>
+      <% end %>
+    </div>
+  </div>
+</div>

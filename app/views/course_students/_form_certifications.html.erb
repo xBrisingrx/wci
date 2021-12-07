@@ -1,0 +1,108 @@
+<%= form_with(model: @course_student, id: 'form-student-califications', class:'needs-validation') do |form| %>
+  
+  <% if !@retest_id.nil?%>
+    <%= form.hidden_field :remedial_course, value: @retest_id %>
+  <%end%>
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :simulation_grade, 'Nota simulación Perf' %>
+      <% if @course_student.simulation_grade > 0 || @course_student.status == 'fail' %>
+        <%= form.number_field :simulation_grade, disabled: true, class:'form-control' %>
+      <% else %>
+        <%= form.number_field :simulation_grade, max: 100, min: 0, class:'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-6">
+      <%= form.label :simulation_grade_date, 'Fecha' %>
+      <% if @course_student.simulation_grade_date.nil? %>
+        <%= form.date_field :simulation_grade_date, class:'form-control' %>
+      <% else %>
+        <%= form.date_field :simulation_grade_date, disabled: true, class:'form-control' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :simulation_bh_grade, 'Nota simulación bh' %>
+      <% if @course_student.simulation_bh_grade > 0 %>
+        <%= form.number_field :simulation_bh_grade, disabled: true, class:'form-control' %>
+      <% else %>
+        <%= form.number_field :simulation_bh_grade, max: 100, min: 0, class:'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-6">
+      <%= form.label :simulation_bh_grade_date, 'Fecha' %>
+      <% if @course_student.simulation_bh_grade_date.nil? %>
+        <%= form.date_field :simulation_bh_grade_date, class:'form-control' %>
+      <% else %>
+        <%= form.date_field :simulation_bh_grade_date, disabled: true, class:'form-control' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :simulation_inv_grade, 'Nota simulación inv' %>
+      <% if @course_student.simulation_inv_grade > 0 %>
+        <%= form.number_field :simulation_inv_grade, disabled: true, class:'form-control' %>
+      <% else %>
+        <%= form.number_field :simulation_inv_grade,max: 100, min: 0, class:'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-6">
+      <%= form.label :simulation_inv_grade_date, 'Fecha' %>
+      <% if @course_student.simulation_inv_grade_date.nil? %>
+        <%= form.date_field :simulation_inv_grade_date, class:'form-control' %>
+      <% else %>
+        <%= form.date_field :simulation_inv_grade_date, disabled: true, class:'form-control' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :final_grade, 'Nota examen final' %>
+      <% if @course_student.final_grade > 0 %>
+        <%= form.number_field :final_grade, disabled: true, class:'form-control' %>
+      <% else %>
+        <%= form.number_field :final_grade, max: 100, min: 0, class:'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-6">
+      <%= form.label :final_grade_date, 'Fecha' %>
+      <% if @course_student.final_grade == 0 %>
+        <%= form.date_field :final_grade_date, class:'form-control', value: "#{@fecha_nota_examen}" %>
+      <% else %>
+        <%= form.date_field :final_grade_date, disabled: true, class:'form-control' %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :remedial_exam_note, 'Nota examen recuperatorio' %>
+      <% if @puede_recuperar %>
+        <%= form.number_field :remedial_exam_note, max: 100, min: 0, class:'form-control' %>
+        <!-- tengo que mostrar la fecha hasta q puede recuperar y si se paso la fecha avisar q ya fue -->
+        <span class="badge badge-danger"> <%= @msg_badge %> </span>
+      <% else %>
+        <%= form.number_field :remedial_exam_note, disabled: true, class:'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-6">
+      <%= form.label :remedial_exam_note_date, 'Fecha' %>
+      <% if @puede_recuperar && !@fecha_retest_examen.nil?  %>
+        <%= form.date_field :remedial_exam_note_date, class:'form-control', value: "#{@fecha_retest_examen}" %>
+      <% elsif @puede_recuperar %>
+        <%= form.date_field :remedial_exam_note_date, class:'form-control' %>
+      <% else %>
+        <%= form.date_field :remedial_exam_note_date, disabled: true, class:'form-control' %>
+      <% end %>
+    </div>
+  </div>
+  <div class="mt-2">
+    <%= form.submit 'Guardar', class: 'btn btn-primary mr-2', id: 'btn-save-calification'  %>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+  </div>
+<% end %>

@@ -1,0 +1,6 @@
+$("#modal-course").html("<%= j (render 'partials/modal') %>")
+$("#modal-course").modal('show')
+
+$('#courses-detail').DataTable({
+    'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
+	})

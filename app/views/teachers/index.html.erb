@@ -1,0 +1,58 @@
+<h1>Instructores</h1>
+<%= link_to 'Agregar instructor', new_teacher_path, {:remote => true, 'data-toggle' =>  "modal",
+      'data-target' => '#modal-teacher', 'class' => 'btn btn-primary justify-content-end mb-2'} %>
+<table id="teachers-table" class="table hover dt-responsive w-100">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>DNI</th>
+      <th>Email</th>
+      <th>Telefono</th>
+      <th>Titulo</th>
+      <th>Pais</th>
+      <th>Acciones</th>
+  </thead>
+  <tbody>
+  </tbody>
+</table> 
+
+<!-- Modal alta de teacher -->
+<div class="modal fade" id="modal-teacher"
+     aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+</div>
+<!-- End modal -->
+
+
+<!-- Modal para eliminar teacher -->
+<div class="modal fade" id="modal-disable-teacher" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">¿ Esta seguro de eliminar al instructor ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert">
+          Tenga en cuenta que todos los registros asociados tambien seran dados de baja.
+          <span data-toggle="collapse" href="#multiCollapseExample1" 
+                role="button" aria-expanded="false" aria-controls="multiCollapseExample1"  
+                class="badge badge-info">Leer mas...</span>
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+              Registros afectados:
+              <ul>
+                <li>registros asociados</li>
+              </ul>
+            </div>
+        </div>
+        <%= form_with(url: teachers_disable_path, id: 'form-disable-teacher') %>
+          <input type="hidden" id="teacher_id" name="teacher[id]" value="">
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+          <button type="button" data-dismiss="modal" class="btn btn-info g-mr-10"> Cerrar </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin modal eliminar teacher -->

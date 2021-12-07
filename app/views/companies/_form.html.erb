@@ -1,0 +1,25 @@
+<%= form_with(model: @company, id: 'form-company' , class: 'needs-validation mx-2') do |form| %>
+
+  <div class="row">
+    <%= form.label :name, 'Nombre/Razon social:' ,class: 'col-4' %>
+    <%= form.text_field :name, class: 'form-control form-control-sm', required: true %>
+    <div class="invalid-feedback company_name"></div>
+  </div>
+
+  <div class="row">
+    <%= form.label :cuit, 'CUIT:' ,class: 'col-3' %>
+    <%= form.text_field :cuit, class: 'form-control form-control-sm' %>
+    <div class="invalid-feedback company_cuit"></div>
+  </div>
+
+  <div class="row">
+    <%= form.label :email, 'Email:' ,class: 'col-3' %>
+    <%= form.email_field :email, class: 'form-control form-control-sm' %>
+    <div class="invalid-feedback company_email"></div>
+  </div>
+
+  <div class="actions mt-2">
+    <%= form.submit 'Guardar', class: 'btn btn-primary mr-2'  %>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+  </div>
+<% end %>

@@ -1,0 +1,100 @@
+<h1>Inscripciones del curso <b> <%= @program.name %> </b></h1>
+
+  <%= link_to 'Inscribir alumno', new_course_student_path( course_id: params[:id]), {:remote => true, 'data-toggle' =>  "modal",
+        'data-target' => '#modal-course-students', 'class' => 'btn btn-primary mb-2'} %>
+
+  <%= link_to 'Registrar e inscribir alumno', register_student_path( course_id: params[:id] ), {:remote => true, 'data-toggle' =>  "modal",
+        'data-target' => '#modal-course-students', 'class' => 'btn btn-warning mb-2'} %>
+
+  <%= link_to 'Volver <i class="fa fa-arrow-left"></i>'.html_safe, courses_path, class: 'btn btn-info mb-2' %>
+<table id="course-students-table" class="table hover dt-responsive w-100">
+  <thead>
+    <tr>
+      <th>Alumno</th>
+      <th>Fecha inscripcion</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+  </thead>
+  <tbody>
+  </tbody>
+</table> 
+
+<hr>
+<h3>Alumnos con retest pendiente</h3>
+<table id="retest-table" class="table hover dt-responsive w-100">
+  <thead>
+    <tr>
+      <th>Alumno</th>
+      <th>Fecha inscripcion</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+  </thead>
+  <tbody>
+  </tbody>
+</table> 
+<!-- Modal alta de course-students -->
+<div class="modal fade" id="modal-course-students"
+     aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+</div>
+<!-- End modal -->
+
+
+<!-- Modal para eliminar course-students -->
+<div class="modal fade" id="modal-disable-course-students" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">¿ Esta seguro de eliminar al alumno ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" role="alert">
+          Tenga en cuenta que todos los registros asociados tambien seran dados de baja.
+          <span data-toggle="collapse" href="#multiCollapseExample1" 
+                role="button" aria-expanded="false" aria-controls="multiCollapseExample1"  
+                class="badge badge-info">Leer mas...</span>
+            <div class="collapse multi-collapse" id="multiCollapseExample1">
+              Registros afectados:
+              <ul>
+                <li>registros asociados</li>
+              </ul>
+            </div>
+        </div>
+        <%= form_with(url: courses_disable_path, id: 'form-disable-course-students') %>
+          <input type="hidden" id="course_students_id" name="course_students[id]" value="">
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+          <button type="button" data-dismiss="modal" class="btn btn-info g-mr-10"> Cerrar </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin modal eliminar course -->
+
+<!-- Modal para marcar alumno como ausente -->
+<div class="modal fade" id="modal-absent-students" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Ausente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id='name-student-absent'></p>
+        <%= form_with(url: absent_student_path, id: 'form-absent-students') %>
+          <input type="hidden" id="course_students_id" name="course_students[id]" value="">
+          <button type="submit" class="btn btn-warning">Ausente</button>
+          <button type="button" data-dismiss="modal" class="btn btn-info g-mr-10"> Cerrar </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin modal marcar alumno como ausente -->
+
+<input type="hidden" id="course_student_id" value="<%= @course.id%>">
+<input type="hidden" id="course_student_type" value="<%= @course.course_type_id%>">

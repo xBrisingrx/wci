@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container">
+      <!-- <img src="<%= Rails.root.join('app/assets/images/certificates/header.jpg') %>" width="100%"> -->
+      
+      <div class="row justify-content-center my-4">
+        <%= image_tag('header.jpg', class: 'my-0 w-100 img-fluid')%>
+
+        <div class="row col-1 w-100 d-flex flex-row">
+          <%= image_tag('certificates/barra_izquierda.jpg', class: 'my-0')%>
+        </div>
+
+        <div class="col-10 w-100">
+          <p class="text-center my-0"><b> <%= "#{@course_student.student.fullname}" %> </b></p>
+          <hr class='my-0'>
+          <p class="text-center my-0">Nombre y apellido del alumno/ Student FullName.</p>
+         
+          <div class="row">
+            <div class="col align-self-center">
+              <p class="ml- my-0"><b>Curso de well control</b></p>
+              <hr class='my-0'>
+              <p class="my-0">Nombre del curso / Course Name</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+               <p class="ml- my-0"><b>Proveedor</b></p>
+                <hr class='my-0'>
+                <p class="my-0">Proveedor / Provider</p>
+            </div>
+            <div class="col-6">
+               <p class="ml- my-0"><b><%= @course_student.course.teacher.name %></b></p>
+                <hr class='my-0'>
+                <p class="my-0">Instructor / Instructor</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+               <p class="ml- my-0"><b><%= @course_student.course.course_type.name %></b></p>
+                <hr class='my-0'>
+                <p class="my-0">Presencial / E-learning</p>
+            </div>
+            <div class="col-6">
+               <p class="ml- my-0"><b><%= @course_student.course.program.code %></b></p>
+                <hr class='my-0'>
+                <p class="my-0">Num de programa / Program Number</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+               <p class="ml- my-0"><b>una tremenda fecha</b></p>
+                <hr class='my-0'>
+                <p class="my-0">Fecha de finalizacion / Completion date</p>
+            </div>
+            <div class="col-6">
+               <p class="ml- my-0"><b>Expiro</b></p>
+                <hr class='my-0'>
+                <p class="my-0">Fecha de vencimiento / Expiration date</p>
+            </div>
+          </div>
+
+          <div class="row justify-content-end">
+            <div class="col-6">
+              <p class="ml- my-0"><b>Expiro</b></p>
+              <hr class='my-0 align-self-start'>
+              <p class="my-0">Num de certificado / Certificate number</p>
+            </div>
+          </div>
+        </div> 
+
+        <br>
+
+        <div class="row">
+          <%= image_tag('certificates/barra_derecha.jpg', class: 'my-0 img-fluid')%>
+        </div>
+
+        <div class="row col-1 w-100 d-flex flex-row-reverse">
+          <%= image_tag("QR/#{@course_student.id}/QR_ready.png") %>
+        </div> 
+
+      <%= image_tag('certificates/footer.jpg', class: 'my-0 w-100 img-fluid') %>
+      </div>
+
+    </div>
+  </body>
+</html>
+
+      <!-- <img src="<%= Rails.root.join('app/assets/images/certificates/footer.jpg') %>" width="100%"> -->
+

@@ -1,0 +1,15 @@
+<%= form_with(model: @course_student, id: 'form-course-student', class:'needs-validation') do |form| %>
+  <%= form.hidden_field :course_id, value: @course_student.course_id%>
+  <div class="col-6">
+    <%= form.label :student_id, 'Alumno:' %>
+    <%= form.select(:student_id, @students.collect {|c| ["#{c.lastname} #{c.name}", c.id]}, 
+                    {:include_blank => "Seleccione alumno"},
+                    class: 'select-2-students form-select form-control', required: true) %>
+    <div class="invalid-feedback course-student_student_id"></div>
+  </div>
+
+  <div class="mt-2">
+    <%= form.submit 'Guardar', class: 'btn btn-primary mr-2'  %>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+  </div>
+<% end %>

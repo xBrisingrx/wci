@@ -1,0 +1,21 @@
+$("#modal-course-students").html("<%= j (render 'partials/modal') %>")
+$('.form-select-company_id').select2({ width: '80%', theme: "bootstrap4" })
+$('.form-select-country').select2({ width: '80%', theme: "bootstrap4" })
+$("#modal-course-students").modal('show')
+
+$("#form-create-and-register-student").on("ajax:success", function(event) {
+    course_students_table.ajax.reload(null,false)
+    let msg = JSON.parse(event.detail[2].response)
+    noty_alert(msg.status, msg.msg)
+    $("#modal-course-students").modal('hide')
+  }).on("ajax:error", function(event) {
+
+  $('#form-create-and-register-student .form-control').removeClass('is-invalid')
+  $('.invalid-feedback').empty()
+
+	let msg = JSON.parse( event.detail[2].response )
+	$.each( msg, function( key, value ) {
+		$(`#form-create-and-register-student #${key}`).addClass('is-invalid')
+		$(`#form-create-and-register-student .student_${key}`).text( value ).show('slow')
+	})
+})

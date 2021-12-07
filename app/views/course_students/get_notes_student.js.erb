@@ -1,0 +1,39 @@
+$("#modal-course-students").html("<%= j (render 'partials/modal') %>")
+
+$("#modal-course-students").modal('show')
+
+final_grade = document.getElementById('course_student_final_grade')
+
+final_grade.addEventListener('change', event => {
+  if (event.target.value != "<%= @course_student.final_grade %>") {
+    document.getElementById('course_student_final_grade_date').setAttribute("required", "true")
+  } else {
+    document.getElementById('course_student_final_grade_date').removeAttribute("required")
+  }
+})
+
+remedial_grade = document.getElementById('course_student_remedial_exam_note')
+
+remedial_grade.addEventListener('change', event => {
+  if (event.target.value != "<%= @course_student.remedial_exam_note %>") {
+    document.getElementById('course_student_remedial_exam_note_date').setAttribute("required", "true")
+  } else {
+    document.getElementById('course_student_remedial_exam_note_date').removeAttribute("required")
+  }
+})
+
+
+$("#form-student-califications").on("ajax:success", function(event) {
+    course_students_table.ajax.reload(null,false)
+    retest_table.ajax.reload(null,false)
+    let msg = JSON.parse(event.detail[2].response)
+    noty_alert(msg.status, msg.msg)
+    $("#modal-course-students").modal('hide')
+  }).on("ajax:error", function(event) {
+	let msg = JSON.parse( event.detail[2].response )
+
+	$.each( msg, function( key, value ) {
+		$(`#form-student-califications #course-student_${key}`).addClass('is-invalid')
+		$(`#form-student-califications .course-student_${key}`).text( value ).show('slow')
+	})
+})

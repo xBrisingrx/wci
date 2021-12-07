@@ -1,0 +1,11 @@
+<p><b>Legajo: </b><%= "#{@student.legajo}" %></p> 
+<p><b>DNI: </b><%= @student.dni %></p> 
+<p><b>Email: </b><%= @student.email %></p> 
+<p><b>Telefono: </b><%= @student.phone %></p> 
+<p><b>Fecha de nacimiento: </b> <%= (@student.birthdate)? @student.birthdate.strftime('%d-%m-%Y') : ' ' %></p> 
+<p><b>Pais: </b> <%= @student.country %></p> 
+<p><b>Empresa: </b> <%= @student.company.name %></p> 
+<p><b>Comentario:</b> <%= @student.comment %> </p>
+
+<button type="button" class="btn btn-info" data-dismiss="modal">Cerrar</button>
+

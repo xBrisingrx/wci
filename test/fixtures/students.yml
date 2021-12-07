@@ -1,0 +1,37 @@
+# == Schema Information
+#
+# Table name: students
+#
+#  id         :integer          not null, primary key
+#  legajo     :string
+#  name       :string
+#  lastname   :string
+#  birthdate  :date
+#  country    :string
+#  dni        :integer
+#  email      :string
+#  phone      :string
+#  comment    :text
+#  active     :boolean          default(TRUE)
+#  company_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  name: MyString
+  birthdate: 2021-09-16
+  lastname: MyString
+  dni: 1
+  email: MyString
+  active: false
+  references: 
+
+two:
+  name: MyString
+  birthdate: 2021-09-16
+  lastname: MyString
+  dni: 1
+  email: MyString
+  active: false
+  references: 

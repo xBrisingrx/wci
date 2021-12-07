@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: teachers
+#
+#  id         :integer          not null, primary key
+#  name       :string
+#  dni        :integer
+#  country    :string
+#  email      :string
+#  title      :string
+#  phone      :string
+#  comment    :text
+#  active     :boolean          default(TRUE)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  name: MyString
+  lastname: MyString
+  dni: 1
+  email: MyString
+  title: MyString
+  active: false
+
+two:
+  name: MyString
+  lastname: MyString
+  dni: 1
+  email: MyString
+  title: MyString
+  active: false

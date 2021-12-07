@@ -1,0 +1,17 @@
+
+  <strong>Codigo:</strong>
+  <%= @program.code %>
+</p>
+
+<p>
+  <strong>Nombre:</strong>
+  <%= @program.name %>
+</p>
+
+<p>
+  <strong>Comentario:</strong>
+  <%= @program.comment %>
+</p>
+
+<%= link_to 'Editar', edit_program_path(@program) %> |
+<%= link_to 'Volver', programs_path %>

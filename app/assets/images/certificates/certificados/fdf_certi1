@@ -1,0 +1,54 @@
+%FDF-1.2
+%‚„œ”
+1 0 obj
+
+<<
+/FDF 
+<<
+/Fields [
+<<
+/T (Nombre del Alumno)
+/V ()
+>> 
+<<
+/T (Nombre del Curso)
+/V ()
+>> 
+<<
+/T (Instructor)
+/V ()
+>> 
+<<
+/T (N de Programa)
+/V ()
+>> 
+<<
+/T (Proveedor)
+/V ()
+>> 
+<<
+/T (Fecha de Finalizacion)
+/V ()
+>> 
+<<
+/T (n_certificado)
+/V ()
+>> 
+<<
+/T (Fecha de Vencimiento)
+/V ()
+>> 
+<<
+/T (Presencial)
+/V ()
+>>]
+>>
+>>
+endobj
+
+trailer
+
+<<
+/Root 1 0 R
+>>
+%%EOF
