@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_12_06_213930) do
 
-  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "cuit"
     t.string "email"
@@ -24,13 +24,13 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "countries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "countries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "course_levels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "course_levels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.text "comment"
     t.boolean "active", default: true
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "course_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "course_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "simulation_grade", default: 0
     t.date "simulation_grade_date"
     t.integer "simulation_bh_grade", default: 0
@@ -52,16 +52,17 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.integer "status", default: 0
     t.text "comment"
     t.boolean "active", default: true
-    t.integer "student_id"
-    t.integer "course_id"
+    t.bigint "student_id"
+    t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "remedial_course"
+    t.bigint "remedial_course"
     t.index ["course_id"], name: "index_course_students_on_course_id"
+    t.index ["remedial_course"], name: "fk_rails_be23097bf7"
     t.index ["student_id"], name: "index_course_students_on_student_id"
   end
 
-  create_table "course_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "course_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.text "comment"
     t.boolean "active", default: true
@@ -69,16 +70,16 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.date "start_date"
     t.date "finish_date"
     t.time "start_hour"
     t.time "finish_hour"
     t.string "place"
-    t.integer "course_level_id"
-    t.integer "course_type_id"
-    t.integer "teacher_id"
-    t.integer "program_id"
+    t.bigint "course_level_id"
+    t.bigint "course_type_id"
+    t.bigint "teacher_id"
+    t.bigint "program_id"
     t.text "comment"
     t.boolean "active", default: true
     t.datetime "created_at", null: false
@@ -89,7 +90,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.index ["teacher_id"], name: "index_courses_on_teacher_id"
   end
 
-  create_table "programs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "programs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "code"
     t.string "name"
     t.integer "certificate"
@@ -99,7 +100,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "legajo"
     t.string "name"
     t.string "lastname"
@@ -110,13 +111,13 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.string "phone"
     t.text "comment"
     t.boolean "active", default: true
-    t.integer "company_id"
+    t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["company_id"], name: "index_students_on_company_id"
   end
 
-  create_table "teachers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "teachers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.integer "dni"
     t.string "country"
@@ -129,7 +130,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "username"
     t.string "email"
@@ -140,4 +141,12 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "course_students", "courses"
+  add_foreign_key "course_students", "courses", column: "remedial_course"
+  add_foreign_key "course_students", "students"
+  add_foreign_key "courses", "course_levels"
+  add_foreign_key "courses", "course_types"
+  add_foreign_key "courses", "programs"
+  add_foreign_key "courses", "teachers"
+  add_foreign_key "students", "companies"
 end
