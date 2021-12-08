@@ -280,7 +280,7 @@ class CourseStudentsController < ApplicationController
   def generar_qr id, dir
     url = url_for(action: 'show_certification', id: id, only_path: false)
     # url['localhost'] = 'brisingr.ddns.net'
-    url['localhost'] = 'localhost'
+    url['localhost'] = "#{ENV['BASE_URL']}"
     qrcode = RQRCode::QRCode.new( url )
     png = qrcode.as_png(
       bit_depth: 1,
