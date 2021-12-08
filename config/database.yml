@@ -30,3 +30,4 @@ production:
   database: wci_production
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
+
