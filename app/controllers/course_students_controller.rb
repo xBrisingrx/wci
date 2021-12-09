@@ -261,6 +261,7 @@ class CourseStudentsController < ApplicationController
 
       pdftk = PdfForms.new('/usr/bin/pdftk')
       pdftk.get_field_names "#{certificado}"
+      puts "certificate #{certificado}  <> un directory #{dir}/#{id}.pdf"
       pdftk.fill_form "#{certificado}", "#{dir}/#{id}.pdf", data, :flatten => true
       
       doc = HexaPDF::Document.open("#{dir}/#{id}.pdf")
@@ -280,7 +281,7 @@ class CourseStudentsController < ApplicationController
   def generar_qr id, dir
     url = url_for(action: 'show_certification', id: id, only_path: false)
     # url['localhost'] = 'brisingr.ddns.net'
-    url['localhost'] = "#{ENV['BASE_URL']}"
+    # url['localhost'] = "#{ENV['BASE_URL']}"
     qrcode = RQRCode::QRCode.new( url )
     png = qrcode.as_png(
       bit_depth: 1,
@@ -300,9 +301,6 @@ class CourseStudentsController < ApplicationController
       retorno = Dir.mkdir( dir )
       IO.binwrite("#{dir}/qr_url.png", png.to_s)
     end
-
-    return File.exist?( dir )
-
   end
 
 
