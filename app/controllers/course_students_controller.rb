@@ -24,6 +24,7 @@ class CourseStudentsController < ApplicationController
     limit_date = course.finish_date + 45.days
     @course_students = CourseStudent.joins( course: [ :program ] )
                                     .where(programs: { id: program_id })
+                                    .where.not(course_students: { course_id: params[:id] })
                                     .where(course_students: { active: true })
                                     .where(course_students: {status: :no_pass})
                                       .includes(:student)
