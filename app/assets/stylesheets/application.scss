@@ -5,3 +5,7 @@
 @import 'plugins/noty/themes/semanticui';
 @import 'plugins/select2/select2.min';
 @import 'plugins/select2/select2-bootstrap4.min';
+
+#menu-wci ul li:hover > ul {
+ display:block;
+}
