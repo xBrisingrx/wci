@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :courses
     post '/courses/disable'
   resources :students
+    get 'estudiantes_por_empresa/:company_id', to: 'students#students_company', as: 'students_company'
     post '/students/disable'
   resources :teachers
     post '/teachers/disable'
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
     post '/programs/disable'
   resources :course_types
   resources :course_levels
+    post '/course_levels/disable'
   resources :course_students
     post '/course_students/disable'
     get 'get_notes_student/:id', to: 'course_students#get_notes_student', as: 'get_notes_student'
