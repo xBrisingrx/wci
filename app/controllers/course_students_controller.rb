@@ -96,7 +96,6 @@ class CourseStudentsController < ApplicationController
     end
 
     rescue => e
-      puts "\n ====> #{e}"
       raise_message = e.message.split(':')
       resp = raise_message[1].split(', ')
       @response = Hash.new
@@ -262,7 +261,6 @@ class CourseStudentsController < ApplicationController
 
       pdftk = PdfForms.new('/usr/bin/pdftk')
       pdftk.get_field_names "#{certificado}"
-      puts "certificate #{certificado}  <> un directory #{dir}/#{id}.pdf"
       pdftk.fill_form "#{certificado}", "#{dir}/#{id}.pdf", data, :flatten => true
       
       doc = HexaPDF::Document.open("#{dir}/#{id}.pdf")
