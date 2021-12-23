@@ -37,10 +37,8 @@ $(document).ready(function(){
       ],
       'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
     })
-  } else {
-    console.warn(' :( ')
   }
-
+  
   $("#form-disable-course-students").on("ajax:success", function(event) {
     course_students_table.ajax.reload(null,false)
     let msg = JSON.parse(event.detail[2].response)

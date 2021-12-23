@@ -12,8 +12,20 @@
 //
 //= require rails-ujs
 //= require activestorage
-//= require jquery-3.6.0.min
-//= require bootstrap.min
+
+// === UNIFY
+//= require unify/jquery.min
+//= require unify/jquery-migrate.min
+//= require unify/popper.min
+//= require unify/bootstrap.min
+//= require unify/hs.core
+//= require unify/hs.megamenu
+//= require unify/hs.header
+//= require unify/hs.hamburgers
+// === END UNIFY
+// jquery-3.6.0.min
+// bootstrap.min
+
 //= require plugins/datatables/datatables.min
 //= require plugins/noty/noty.min
 //= require plugins/noty/velocity.min
@@ -22,6 +34,7 @@
 //= require students
 //= require teachers
 //= require courses
+//= require course_levels
 //= require course_students
 //= require companies
 
@@ -36,3 +49,16 @@ function noty_alert(type, message) {
     "theme": "semanticui"
   }).show();
 }
+
+$(window).on('load', function () {
+  // initialization of header
+  $.HSCore.components.HSHeader.init($('#js-header'));
+  $.HSCore.helpers.HSHamburgers.init('.hamburger');
+
+  // initialization of HSMegaMenu component
+  $('.js-mega-menu').HSMegaMenu({
+    event: 'hover',
+    pageContainer: $('.container'),
+    breakpoint: 991
+  });
+});

@@ -1,4 +1,4 @@
-let students_table
+let students_table, students_company_table
 
 function modal_disable_student(id) {
   $('#modal-disable-student #student_id').val(id)
@@ -21,6 +21,22 @@ $(document).ready(function(){
     ],
     'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
 	})
+
+  students_table = $("#students-company-table").DataTable({
+    'ajax':'/estudiantes_por_empresa/' + $('#students_company_id').val(),
+    'columns': [
+      {'data': 'legajo'},
+      {'data': 'name'},
+      {'data': 'lastname'},
+      {'data': 'dni'},
+      {'data': 'email'},
+      {'data': 'phone'},
+      {'data': 'country'},
+      {'data': 'company'},
+      {'data': 'actions'}
+    ],
+    'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
+  })
 
   $("#form-disable-student").on("ajax:success", function(event) {
     students_table.ajax.reload(null,false)
