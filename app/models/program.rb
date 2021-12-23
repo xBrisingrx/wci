@@ -14,8 +14,8 @@
 class Program < ApplicationRecord
 	has_many :courses 
 	
-	validates :code, presence: { message: "Este campo es obligatorio" }
+	validates :code, presence: { case_sensitive: false, message: "Este campo es obligatorio" }
 	validates :code, uniqueness: { message: "Este codigo pertenece a otro programa" }
-	validates :name, presence: { message: "Este campo es obligatorio" }
+	validates :name, presence: { case_sensitive: false, message: "Este campo es obligatorio" }
 	validates :name, uniqueness: { message: "Este nombre pertenece a otro programa" }
 end

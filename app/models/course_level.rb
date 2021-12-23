@@ -11,4 +11,7 @@
 #
 class CourseLevel < ApplicationRecord
 	has_many :courses
+
+	validates :name, presence: { message: "Este campo es obligatorio" }
+	validates :name, uniqueness: { case_sensitive: false, message: "Este nivel de curso ya esta registrado" }
 end

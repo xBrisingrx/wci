@@ -25,7 +25,7 @@ class Student < ApplicationRecord
 	validates :name, presence: { message: "Este campo es obligatorio" }
 	validates :lastname, presence: { message: "Este campo es obligatorio" }
 	# No se pueden repetir los legajos dentro de una misma empresa
-	validates :legajo, uniqueness: { scope: :company_id ,case_sensitive: false, message: "Ya existe un alumno con este legajo en esta empresa" }
+	validates :legajo, uniqueness: { scope: :company_id ,case_sensitive: false, message: "Ya existe un alumno con este legajo en esta empresa" }, allow_blank: true
 	validates :dni, uniqueness: { message: "El dni pertenece a otro alumno" }, allow_blank: true
 
 	def fullname
