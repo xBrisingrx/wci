@@ -3,7 +3,7 @@ class CourseLevelsController < ApplicationController
 
   # GET /course_levels or /course_levels.json
   def index
-    @course_levels = CourseLevel.all
+    @course_levels = CourseLevel.where(active:true)
   end
 
   # GET /course_levels/1 or /course_levels/1.json
@@ -12,11 +12,13 @@ class CourseLevelsController < ApplicationController
 
   # GET /course_levels/new
   def new
+    @title_modal = 'Nuevo nivel de curso'
     @course_level = CourseLevel.new
   end
 
   # GET /course_levels/1/edit
   def edit
+    @title_modal = 'Editar nivel de curso'
   end
 
   # POST /course_levels or /course_levels.json
@@ -25,11 +27,9 @@ class CourseLevelsController < ApplicationController
 
     respond_to do |format|
       if @course_level.save
-        format.html { redirect_to @course_level, notice: "Course level was successfully created." }
-        format.json { render :show, status: :created, location: @course_level }
+        format.json { render json: { status: 'success', msg: 'Curso registrado' }, status: :created }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @course_level.errors, status: :unprocessable_entity }
+        format.json { render json: @course_level.errors , status: :unprocessable_entity }
       end
     end
   end
@@ -38,10 +38,8 @@ class CourseLevelsController < ApplicationController
   def update
     respond_to do |format|
       if @course_level.update(course_level_params)
-        format.html { redirect_to @course_level, notice: "Course level was successfully updated." }
-        format.json { render :show, status: :ok, location: @course_level }
+        format.json { render json: { status: 'success', msg: 'Datos actualizados' }, status: :ok, location: @course_level }
       else
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @course_level.errors, status: :unprocessable_entity }
       end
     end
@@ -56,6 +54,19 @@ class CourseLevelsController < ApplicationController
     end
   end
 
+  def disable
+    @course_level = CourseLevel.find(params[:course_level][:id])
+    if @course_level.update!(active: false)
+      render json: { status: 'success', msg: 'Curso eliminado' }, status: :ok
+    else
+      render json: { status: 'error', msg: 'Ocurrio un error al realizar la operación' }, status: :unprocessable_entity
+    end
+
+    rescue => e
+      @response = e.message.split(':')
+      render json: { @response[0] => @response[1] }, status: 402
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_course_level
@@ -64,6 +75,6 @@ class CourseLevelsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def course_level_params
-      params.require(:course_level).permit(:name)
+      params.require(:course_level).permit(:name, :comment)
     end
 end
