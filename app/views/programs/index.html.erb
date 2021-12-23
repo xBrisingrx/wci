@@ -1,17 +1,30 @@
 <h1>Programas</h1>
 <%= link_to 'Nuevo', new_program_path, {:remote => true, 'data-toggle' =>  "modal",
       'data-target' => '#modal-program', 'class' => 'btn btn-primary justify-content-end mb-2'} %>
-<table id="programs-table" class="table hover dt-responsive w-100">
-  <thead>
-    <tr>
-      <th>Codigo</th>
-      <th>Nombre</th>
-      <th>Certificado</th>
-      <th>Acciones</th>
-  </thead>
-  <tbody>
-  </tbody>
-</table> 
+<!-- Programs table -->
+<div class="card g-brd-darkpurple rounded-0 g-mb-30">
+  <h3 class="card-header g-bg-darkpurple g-brd-transparent g-color-white g-font-size-16 rounded-0 mb-2">
+    <i class="fa fa-gear g-mr-5"></i>
+    Programas registrados
+  </h3>
+
+  <div class="table-responsive px-2 pb-1">
+    <table id="programs-table" class="table table-hover u-table--v1 mb-0 dt-responsive w-100">
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Nombre</th>
+          <th>Certificado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- End Programs table -->
 
 <!-- Modal alta de program -->
 <div class="modal fade" id="modal-program" role="dialog"

@@ -2,8 +2,8 @@ json.data @companies do |company|
 	json.name "#{company.name}"
 	json.cuit company.cuit
 	json.email company.email
-	json.actions "
-								<button class='btn btn-info btn-sm' title='Ver alumnos registrados'> <i class='fa fa-users'></i> </button>
+	json.actions "#{link_to '<i class="fa fa-users"></i>'.html_safe, students_company_path(company.id), 
+      							'class' => 'btn btn-sm u-btn-purple', title: 'Alumnos de esta empresa'}
 								#{link_to '<i class="fa fa-eye"></i>'.html_safe, company_path(company), 
 										:remote => true, 'data-toggle' =>  'modal',
       							'data-target' => '#modal-company', 

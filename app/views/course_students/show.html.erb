@@ -7,31 +7,48 @@
         'data-target' => '#modal-course-students', 'class' => 'btn btn-warning mb-2'} %>
 
   <%= link_to 'Volver <i class="fa fa-arrow-left"></i>'.html_safe, courses_path, class: 'btn btn-info mb-2' %>
-<table id="course-students-table" class="table hover dt-responsive w-100">
-  <thead>
-    <tr>
-      <th>Alumno</th>
-      <th>Fecha inscripcion</th>
-      <th>Estado</th>
-      <th>Acciones</th>
-  </thead>
-  <tbody>
-  </tbody>
-</table> 
+<div class="card g-brd-purple rounded-0 g-mb-30">
+  <h3 class="card-header g-bg-purple g-brd-transparent g-color-white g-font-size-16 rounded-0 mb-2">
+    <i class="fa fa-users g-mr-5"></i>
+    Alumnos registrados
+  </h3>
+  <div class="px-2 pb-1">
+    <table id="course-students-table" class="table hover dt-responsive w-100 u-table--v1">
+      <thead>
+        <tr>
+          <th>Alumno</th>
+          <th>Fecha inscripcion</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+      </thead>
+      <tbody>
+      </tbody>
+    </table> 
+  </div> 
+</div>
 
 <hr>
-<h3>Alumnos con retest pendiente</h3>
-<table id="retest-table" class="table hover dt-responsive w-100">
-  <thead>
-    <tr>
-      <th>Alumno</th>
-      <th>Fecha inscripcion</th>
-      <th>Estado</th>
-      <th>Acciones</th>
-  </thead>
-  <tbody>
-  </tbody>
-</table> 
+
+<div class="card g-brd-lightred rounded-0 g-mb-30">
+  <h3 class="card-header g-bg-lightred g-brd-transparent g-color-white g-font-size-16 rounded-0 mb-2">
+    <i class="fa fa-users g-mr-5"></i>
+    Alumnos con retest pendiente de este curso
+  </h3>
+  <div class="px-2 pb-1">
+    <table id="retest-table" class="table hover dt-responsive w-100 u-table--v1">
+      <thead>
+        <tr>
+          <th>Alumno</th>
+          <th>Fecha inscripcion</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+      </thead>
+      <tbody>
+      </tbody>
+    </table> 
+  </div> 
+</div>
+
 <!-- Modal alta de course-students -->
 <div class="modal fade" id="modal-course-students"
      aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
@@ -87,8 +104,8 @@
         <p id='name-student-absent'></p>
         <%= form_with(url: absent_student_path, id: 'form-absent-students') %>
           <input type="hidden" id="course_students_id" name="course_students[id]" value="">
-          <button type="submit" class="btn btn-warning">Ausente</button>
-          <button type="button" data-dismiss="modal" class="btn btn-info g-mr-10"> Cerrar </button>
+          <button type="submit" class="btn u-btn-primary">Ausente</button>
+          <button type="button" data-dismiss="modal" class="btn u-btn-lightred g-mr-10"> Cerrar </button>
         </form>
       </div>
     </div>

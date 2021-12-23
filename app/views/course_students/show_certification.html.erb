@@ -1,24 +1,27 @@
 <div class="col-4 mb-2 mt-2 mx-auto text-center">
   <img src="/assets/logo_international.png" width="180" height="100" alt="">
 </div>
-  
-<div class="col-8 col-sm-8 col-md-6 col-xl-6 mx-auto">
-  <div class="card mt-4 border-dark">
-    <div class="card-header">
-      <h3 class="text-center"> Curso <%= @course_student.course.program.name %> </h3>
-    </div>
-    <div class="card-body">
-      <p><b>Nombre y apellido del Alumno/Student Full Name: </b><%= "#{@course_student.student.fullname}" %></p> 
-      <p><b>Proveedor/Provider: </b>Well Control International</p> 
-      <p><b>Instructor/Instructor: </b><%= @course_student.course.teacher.name %></p> 
-      <p><b>Presencial/E-Learning: </b><%= @course_student.course.course_type.name %></p> 
-      <p><b>N de programa/Program Numbre: </b><%= @course_student.course.program.code %></p> 
-      <p><b>Fecha de finalizacion/Completion date: </b><%= @course_student.final_grade_date.strftime('%d-%m-%Y') %></p> 
-      <p><b>Fecha de vencimiento/Expiration date: </b><%= @vencimiento.strftime('%d-%m-%Y') %></p> 
-      <p><b>N de Certificado/Cartificate number: </b><%= "WC-#{@course_student.student.dni}-#{@course_student.course.program.code.split('-').last}" %></p> 
-      <% if logged_in? %>
-        <%= link_to 'Volver', course_student_path(@course_student.course_id), class: 'btn btn-info' %>
-      <% end %>
-    </div>
-  </div>
+
+ <div class="col-md-4 g-mb-30 mx-auto">
+          <!-- Icon Blocks -->
+  <div class="g-brd-around--md g-brd-gray-light-v4 g-brd-primary-top text-center g-pa-10 g-px-30--lg g-py-40--lg">
+    <span class="d-block g-color-gray-dark-v4 g-font-size-40 g-mb-15">
+      <i class="icon-finance-009 u-line-icon-pro"></i>
+    </span>
+    <h3 class="h5 g-color-black g-mb-10">Curso <%= @course_student.course.program.name %></h3>
+    <p class="g-color-gray-dark-v4"><%= @course_student.course.program.comment %></p>
+    <div class="d-inline-block g-width-40 g-brd-bottom g-brd-gray-dark-v5 g-my-15"></div>
+    <ul class="list-unstyled g-px-30 g-mb-0">
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Nombre y apellido del Alumno/Student Full Name: </b><%= "#{@course_student.student.fullname}" %></li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Proveedor/Provider: </b>Well Control International</li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Instructor/Instructor: </b><%= @course_student.course.teacher.name %></li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Presencial/E-Learning: </b><%= @course_student.course.course_type.name %></li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>N de programa/Program Numbre: </b><%= @course_student.course.program.code %></li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Fecha de finalizacion/Completion date: </b><%= @course_student.final_grade_date.strftime('%d-%m-%Y') %></li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Fecha de vencimiento/Expiration date: </b><%= @vencimiento.strftime('%d-%m-%Y') %></li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>N de Certificado/Cartificate number: </b><%= "WC-#{@course_student.student.dni}-#{@course_student.course.program.code.split('-').last}" %></li>
+    </ul>
+    <% if logged_in? %>
+      <%= link_to 'Volver', course_student_path(@course_student.course_id), class: 'btn u-btn-cyan mt-2' %>
+    <% end %>
 </div>

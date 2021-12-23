@@ -1,23 +1,36 @@
 <h1>Cursos</h1>
 <%= link_to 'Agregar curso', new_course_path, {:remote => true, 'data-toggle' =>  "modal",
       'data-target' => '#modal-course', 'class' => 'btn btn-primary justify-content-end mb-2'} %>
-<table id="courses-table" class="table hover dt-responsive w-100">
-  <thead>
-    <tr>
-      <th>Codigo</th>
-      <th>Curso</th>
-      <th>Inicio</th>
-      <th>Fin</th>
-      <th>Hora inicio</th>
-      <th>Hora fin</th>
-      <th>Instructor</th>
-      <th>Nivel</th>
-      <th>Modo</th>
-      <th>Acciones</th>
-  </thead>
-  <tbody>
-  </tbody>
-</table> 
+
+<!-- courses table -->
+<div class="card g-brd-blue rounded-0 g-mb-30">
+  <h3 class="card-header g-bg-blue g-brd-transparent g-color-white g-font-size-16 rounded-0 mb-2">
+    <i class="fa fa-mortar-board g-mr-5"></i>
+    Niveles de cursos registrados
+  </h3>
+  <div class="px-2 pb-1">
+    <table id="courses-table" class="table hover dt-responsive w-100 u-table--v1">
+      <thead>
+        <tr>
+          <th>Codigo</th>
+          <th>Curso</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+          <th>Hora inicio</th>
+          <th>Hora fin</th>
+          <th>Instructor</th>
+          <th>Nivel</th>
+          <th>Modo</th>
+          <th>Acciones</th>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div> 
+</div>
+<!-- End courses table -->
+
+
 
 <!-- Modal alta de course -->
 <div class="modal fade" id="modal-course"

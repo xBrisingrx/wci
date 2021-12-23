@@ -10,11 +10,13 @@
   </head>
 
   <body>
-    <% if logged_in? %>
-      <%= render('layouts/nav') %>
-    <%end%>
-    <div class="container-fluid">
-      <%= yield %>
-    </div>
+    <main>
+      <% if logged_in? %>
+        <%= render('layouts/nav') %>
+      <%end%>
+      <div class="container-fluid">
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>

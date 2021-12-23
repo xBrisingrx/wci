@@ -1,22 +1,18 @@
-<%= form_with(model: course_level, local: true) do |form| %>
-  <% if course_level.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(course_level.errors.count, "error") %> prohibited this course_level from being saved:</h2>
-
-      <ul>
-      <% course_level.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+<%= form_with(model: @course_level, id: 'form-course-level' ,class: 'needs-validation g-brd-around g-brd-gray-light-v4 g-pa-30 g-mb-30') do |form| %>
+  <div class="form-group">
+    <%= form.label :name, 'Nombre:' ,class: 'col-3' %>
+    <%= form.text_field :name, class: 'form-control form-control-sm', required: true %>
+    <div class="invalid-feedback course_level_name"></div>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.label :comment, 'Comentario:' ,class: 'col-3' %>
+    <%= form.text_area :comment, class: 'form-control form-control-sm' %>
+    <div class="invalid-feedback course_level_comment"></div>
+  </div>
+
+  <div class="actions mt-2">
+    <%= form.submit 'Guardar', class: 'btn btn-primary mr-2'  %>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
   </div>
 <% end %>

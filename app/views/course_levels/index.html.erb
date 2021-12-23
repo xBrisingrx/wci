@@ -1,27 +1,58 @@
-<p id="notice"><%= notice %></p>
+<%= link_to 'Nuevo', new_course_level_path, {:remote => true, 'data-toggle' =>  "modal",
+      'data-target' => '#modal-courses', 'class' => 'btn btn-primary justify-content-end mb-2'} %>
+<!-- courses-level table -->
+<div class="card g-brd-darkpurple rounded-0 g-mb-30">
+  <h3 class="card-header g-bg-darkpurple g-brd-transparent g-color-white g-font-size-16 rounded-0 mb-2">
+    <i class="fa fa-gear g-mr-5"></i>
+    Niveles de cursos registrados
+  </h3>
 
-<h1>Course Levels</h1>
+  <div class="table-responsive px-2 pb-1">
+    <table id="course_levels_table" class="table table-hover u-table--v1 mb-0 dt-responsive w-100">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Detalle</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- End courses-level table -->
 
-  <tbody>
-    <% @course_levels.each do |course_level| %>
-      <tr>
-        <td><%= course_level.name %></td>
-        <td><%= link_to 'Show', course_level %></td>
-        <td><%= link_to 'Edit', edit_course_level_path(course_level) %></td>
-        <td><%= link_to 'Destroy', course_level, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- Modal alta de course level -->
+<div class="modal fade" id="modal-course-level" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+</div>
+<!-- End modal -->
 
-<br>
 
-<%= link_to 'New Course Level', new_course_level_path %>
+<!-- Modal para eliminar course-level -->
+<div class="modal fade" id="modal-disable-course-level" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">¿ Esta seguro de eliminar este nivel ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(url: course_levels_disable_path, id: 'form-disable-course-level') %>
+          <input type="hidden" id="course_level_id" name="course_level[id]" value="">
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+          <button type="button" data-dismiss="modal" class="btn btn-info g-mr-10"> Cerrar </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin modal eliminar course_level -->
+
+
+
+
