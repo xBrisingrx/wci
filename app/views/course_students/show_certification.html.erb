@@ -2,8 +2,7 @@
   <img src="/assets/logo_international.png" width="180" height="100" alt="">
 </div>
 
- <div class="col-md-4 g-mb-30 mx-auto">
-          <!-- Icon Blocks -->
+<div class="col-6 g-mb-30 mx-auto">
   <div class="g-brd-around--md g-brd-gray-light-v4 g-brd-primary-top text-center g-pa-10 g-px-30--lg g-py-40--lg">
     <span class="d-block g-color-gray-dark-v4 g-font-size-40 g-mb-15">
       <i class="icon-finance-009 u-line-icon-pro"></i>
@@ -24,4 +23,5 @@
     <% if logged_in? %>
       <%= link_to 'Volver', course_student_path(@course_student.course_id), class: 'btn u-btn-cyan mt-2' %>
     <% end %>
+  </div>
 </div>
