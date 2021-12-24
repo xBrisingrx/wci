@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: %i[ show edit update destroy ]
-  before_action :set_active_menu, only: %i[ index ]
+  before_action :set_active_menu, only: %i[ index students_company ]
 
   # GET /students or /students.json
   def index
@@ -8,6 +8,15 @@ class StudentsController < ApplicationController
     @breadcrumbs = [
       [ :name =>'Clientes', :path => students_path],
       [ :name =>'Alumnos', :path => students_path] 
+    ]
+  end
+
+  def students_company
+    @company = Company.find(params[:company_id])
+    @students = @company.students
+    @breadcrumbs = [
+      [ :name =>'Empresas', :path => companies_path],
+      [ :name =>"Alumnos de la empresa #{@company.name}", :path => students_path] 
     ]
   end
 
