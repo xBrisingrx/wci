@@ -7,7 +7,9 @@ json.data @students do |student|
 	json.phone student.phone
 	json.country student.country
 	json.company student.company.name
-	json.actions "#{link_to '<i class="fa fa-eye"></i>'.html_safe, student_path(student), 
+	json.actions "#{link_to '<i class="fa fa-mortar-board"></i>'.html_safe, student_courses_path(student.id),  
+      							'class' => 'btn btn-sm u-btn-cyan', title: 'Cursos realizados'}
+      							#{link_to '<i class="fa fa-eye"></i>'.html_safe, student_path(student), 
 										:remote => true, 'data-toggle' =>  'modal',
       							'data-target' => '#modal-student', 
       							'class' => 'btn btn-sm u-btn-primary', title: 'Detalle'}

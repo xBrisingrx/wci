@@ -1,4 +1,4 @@
-let students_table, students_company_table
+let students_table, students_company_table, student_courses_table
 
 function modal_disable_student(id) {
   $('#modal-disable-student #student_id').val(id)
@@ -22,7 +22,7 @@ $(document).ready(function(){
     'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
 	})
 
-  students_table = $("#students-company-table").DataTable({
+  students_company_table = $("#students-company-table").DataTable({
     'ajax':'/estudiantes_por_empresa/' + $('#students_company_id').val(),
     'columns': [
       {'data': 'legajo'},
@@ -35,6 +35,10 @@ $(document).ready(function(){
       {'data': 'company'},
       {'data': 'actions'}
     ],
+    'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
+  })
+
+  student_courses_table = $("#student-courses-table").DataTable({
     'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
   })
 
