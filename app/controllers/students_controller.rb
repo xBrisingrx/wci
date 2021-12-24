@@ -1,9 +1,14 @@
 class StudentsController < ApplicationController
   before_action :set_student, only: %i[ show edit update destroy ]
+  before_action :set_active_menu, only: %i[ index ]
 
   # GET /students or /students.json
   def index
     @students = Student.where(active:true)
+    @breadcrumbs = [
+      [ :name =>'Clientes', :path => students_path],
+      [ :name =>'Alumnos', :path => students_path] 
+    ]
   end
 
   # GET /students/1 or /students/1.json
@@ -87,6 +92,10 @@ class StudentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_student
       @student = Student.find(params[:id])
+    end
+
+    def set_active_menu
+      @nav_active = [:clients=> 'active', :courses=> '', :programs=> '']
     end
 
     # Only allow a list of trusted parameters through.

@@ -13,6 +13,7 @@
     <main>
       <% if logged_in? %>
         <%= render('layouts/nav') %>
+        <%= render('layouts/breadcrumbs') %>
       <%end%>
       <div class="container-fluid">
         <%= yield %>

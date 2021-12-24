@@ -1,9 +1,14 @@
 class CourseLevelsController < ApplicationController
   before_action :set_course_level, only: %i[ show edit update destroy ]
+  before_action :set_active_menu, only: %i[ index ]
 
   # GET /course_levels or /course_levels.json
   def index
     @course_levels = CourseLevel.where(active:true)
+    @breadcrumbs = [
+      [ :name =>'Cursos', :path => courses_path],
+      [ :name =>'Niveles', :path => course_levels_path] 
+    ]
   end
 
   # GET /course_levels/1 or /course_levels/1.json
@@ -71,6 +76,10 @@ class CourseLevelsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_course_level
       @course_level = CourseLevel.find(params[:id])
+    end
+
+    def set_active_menu
+      @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']
     end
 
     # Only allow a list of trusted parameters through.

@@ -4,6 +4,11 @@ class CompaniesController < ApplicationController
   # GET /companies or /companies.json
   def index
     @companies = Company.where(active: true)
+    @breadcrumbs = [
+      [ :name =>'Clientes', :path => students_path],
+      [ :name =>'Empresas', :path => companies_path] 
+    ]
+    @nav_active = [:clients=> 'active', :courses=> '', :programs=> '']
   end
 
   # GET /companies/1 or /companies/1.json

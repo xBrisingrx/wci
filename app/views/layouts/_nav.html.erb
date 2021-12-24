@@ -21,10 +21,10 @@
         <!-- Navigation -->
         <div class="collapse navbar-collapse align-items-center flex-sm-row g-pt-10" id="navBar">
           <ul class="navbar-nav ml-auto text-uppercase g-font-weight-600 u-main-nav-v5 u-sub-menu-v1">
-            <li class="nav-item g-mx-20--lg g-mb-5 g-mb-0--lg <%= current_class_by(path: root_path) %>">
+            <li class="nav-item g-mx-20--lg g-mb-5 g-mb-0--lg">
               <%= link_to 'Principal', root_path, class: 'nav-link' %>
             </li>
-            <li class="nav-item hs-has-sub-menu g-mx-20--lg g-mb-5 g-mb-0--lg <%= current_class_by(path: students_path) %>">
+            <li class="nav-item hs-has-sub-menu g-mx-20--lg g-mb-5 g-mb-0--lg <%= @nav_active[0][:clients] %>">
               <%= link_to 'Clientes', students_path, class: 'nav-link', id: 'clients-link', 
                 aria: { haspopup: 'true', expanded: 'false', controls: 'clients-submenu' } %>
               <!-- Submenu clients -->
@@ -35,7 +35,7 @@
               <!-- End Submenu -->
             </li>
 
-            <li class="nav-item hs-has-sub-menu g-mx-20--lg g-mb-5 g-mb-0--lg <%= current_class_by(path: courses_path) %>">
+            <li class="nav-item hs-has-sub-menu g-mx-20--lg g-mb-5 g-mb-0--lg <%= @nav_active[0][:courses] %>">
               <%= link_to 'Cursos', courses_path, class: 'nav-link', id: 'courses-link', 
                 aria: { haspopup: 'true', expanded: 'false', controls: 'courses-submenu' } %>
               <ul class="hs-sub-menu list-unstyled g-mt-20--lg g-mt-10--lg--scrolling" id="courses-submenu" aria-labelledby="nav-link-1">
@@ -43,7 +43,7 @@
               </ul>
             </li>
 
-            <li class="nav-item g-mx-20--lg g-mb-5 g-mb-0--lg <%= current_class_by(path: programs_path) %>">
+            <li class="nav-item g-mx-20--lg g-mb-5 g-mb-0--lg <%= @nav_active[0][:programs] %>">
               <%= link_to 'Programas', programs_path, class: 'nav-link'%>
             </li>
           </ul>
@@ -57,3 +57,4 @@
   </div>
 </header>
 <!-- End Header -->
+

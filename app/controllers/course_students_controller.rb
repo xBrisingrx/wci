@@ -1,7 +1,8 @@
 class CourseStudentsController < ApplicationController
   before_action :set_course_student, only: %i[ edit update destroy get_notes_student show_certification certificado_wci ]
   before_action :set_name_enums, only: %i[ show get_student_retest ]
-  skip_before_action :no_login, only: %i[ show_certification ]
+  before_action :set_active_menu, only: %i[ show show_certification ]
+  skip_before_action :no_login, only: %i[ show_certification  ]
 
   # GET /course_students or /course_students.json
   def index
@@ -10,6 +11,10 @@ class CourseStudentsController < ApplicationController
 
   # GET /course_students/1 or /course_students/1.json
   def show
+    @breadcrumbs = [
+        [ :name =>'Cursos', :path => courses_path],
+        [ :name =>'Inscripciones', :path => '']
+      ]
     @course = Course.select('id, finish_date, program_id, course_type_id').find(params[:id])
     @program = Program.select('name').find(@course.program_id)
     @course_students = CourseStudent.where(active: true,course_id: params[:id]).or( CourseStudent.where(remedial_course: params[:id]) ).includes(:student)
@@ -228,6 +233,11 @@ class CourseStudentsController < ApplicationController
 
   def show_certification
     @vencimiento = @course_student.course.finish_date + 2.years
+    @breadcrumbs = [
+        [ :name =>'Cursos', :path => courses_path],
+        [ :name =>'Inscripciones', :path => course_student_path(@course_student.course_id)],
+        [ :name =>'Certificado', :path => '']
+      ]
   end
 
   def generar_pdf course_student,dir, n_certificado
@@ -312,6 +322,10 @@ class CourseStudentsController < ApplicationController
     # Paso a :es mis enumarados
     def set_name_enums
       @status = { 'pending' => 'En curso', 'pass' => 'Aprobado', 'no_pass' => 'Desaprobado', 'absent' => 'Ausente'}
+    end
+
+    def set_active_menu
+      @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']
     end
 
     def course_student_params

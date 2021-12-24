@@ -1,0 +1,20 @@
+<div class="shortcode-html">
+  <section class="g-brd-top g-brd-bottom g-brd-gray-light-v4 g-py-10">
+    <div class="container g-bg-cover__inner">
+      <ul class="u-list-inline">
+        <% @breadcrumbs.each do |b| %>
+          <% if !(b == @breadcrumbs.last) %>
+            <li class="list-inline-item g-mr-7">
+              <%= link_to b[0][:name], b[0][:path], class: 'u-link-v5 g-color-main' %>
+              <i class="fa fa-angle-right g-ml-7"></i>
+            </li>
+          <% else %>
+            <li class="list-inline-item g-color-primary">
+              <span><%= b[0][:name]%></span>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </section>
+</div>

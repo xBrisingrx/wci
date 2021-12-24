@@ -6,6 +6,8 @@ class CoursesController < ApplicationController
   def index
     @courses = Course.where(active: :true)
     @title_modal = 'Alumnos en este curso'
+    @breadcrumbs = [ [ :name =>'Cursos', :path => students_path ] ]
+    @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']
   end
 
   # GET /courses/1 or /courses/1.json
