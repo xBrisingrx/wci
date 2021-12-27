@@ -23,7 +23,7 @@ $(document).ready(function(){
 	})
 
   students_company_table = $("#students-company-table").DataTable({
-    'ajax':'/estudiantes_por_empresa/' + $('#students_company_id').val(),
+    'ajax':'/alumnos_por_empresa/' + $('#students_company_id').val(),
     'columns': [
       {'data': 'legajo'},
       {'data': 'name'},
