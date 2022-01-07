@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   
   resources :courses
     post '/courses/disable'
+  get 'cursos_finalizados', to: 'courses_finished#index', as: 'courses_finished'
   resources :students
     get 'alumnos_por_empresa/:company_id', to: 'students#students_company', as: 'students_company'
     get 'alumno_cursos/:id', to: 'students#student_courses', as: 'student_courses'
@@ -26,7 +27,9 @@ Rails.application.routes.draw do
     post '/course_students/disable'
     get 'get_notes_student/:id', to: 'course_students#get_notes_student', as: 'get_notes_student'
 
-    get 'get_retest_student/:id/:course_retest_id', to: 'course_students#get_notes_student', as: 'get_retest_student'
+    get 'get_retest_student/:id/:course_retest_id', to: 'course_students#get_notes_student_retest', as: 'get_retest_student'
+    get 'get_retest_student_retest/:id/:course_retest_id', to: 'course_students#get_retest_student_retest', as: 'get_retest_student_retest'
+    post 'create_course_student_retest', to: 'course_students#create_course_student_retest', as: 'create_course_student_retest'
     
     get 'certificado_wci/:id', to: 'course_students#certificado_wci', as: 'certificado_wci'
     get 'show_certification/:id', to: 'course_students#show_certification', as: 'show_certification'

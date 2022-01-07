@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: %i[ show edit update destroy ]
+  before_action :set_student, only: %i[ show edit update destroy student_courses ]
   before_action :set_active_menu, only: %i[ index students_company student_courses ]
 
   # GET /students or /students.json
@@ -21,7 +21,7 @@ class StudentsController < ApplicationController
   end
 
   def student_courses
-    @student = Student.find(params[:id])
+    @courses = CourseStudent.where(student_id: params[:id]).order(:id)
     @status = { 'pending' => 'En curso', 'pass' => 'Aprobado', 'no_pass' => 'Desaprobado', 'absent' => 'Ausente'}
     @breadcrumbs = [
       [ :name =>'Clientes', :path => students_path],

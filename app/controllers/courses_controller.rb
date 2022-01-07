@@ -4,7 +4,8 @@ class CoursesController < ApplicationController
 
   # GET /courses or /courses.json
   def index
-    @courses = Course.where(active: :true)
+    limit_date = Time.now.strftime("%Y-%m-%d")
+    @courses = Course.where(active: :true).where("finish_date >= '#{ limit_date }'")
     @title_modal = 'Alumnos en este curso'
     @breadcrumbs = [ [ :name =>'Cursos', :path => students_path ] ]
     @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']

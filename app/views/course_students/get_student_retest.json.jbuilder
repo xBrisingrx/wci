@@ -1,7 +1,11 @@
 json.data @course_students do |course|
 	json.student "#{course.student.fullname}"
 	json.inscription_date course.created_at.strftime('%d-%m-%Y')
-	json.status @status[course.status]
+	if course.is_retest
+		json.status "#{@status[course.status]} <span class='badge bg-info'>retest</span>"
+	else
+		json.status @status[course.status]
+	end
 	json.actions "#{link_to '<i class="fa fa-check-square-o"></i>'.html_safe, get_retest_student_path(course, params[:id]), 
 										:remote => true,
       							'class' => 'btn btn-sm btn-info', title: 'Calificaciones'}

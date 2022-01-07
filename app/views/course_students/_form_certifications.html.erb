@@ -9,7 +9,7 @@
       <% if @course_student.simulation_grade > 0 || @course_student.status == 'fail' %>
         <%= form.number_field :simulation_grade, disabled: true, class:'form-control' %>
       <% else %>
-        <%= form.number_field :simulation_grade, max: 100, min: 0, class:'form-control' %>
+        <%= form.number_field :simulation_grade, max: 100, min: 0, class:'form-control', required: true %>
       <% end %>
     </div>
     <div class="col-6">
@@ -28,7 +28,7 @@
       <% if @course_student.simulation_bh_grade > 0 %>
         <%= form.number_field :simulation_bh_grade, disabled: true, class:'form-control' %>
       <% else %>
-        <%= form.number_field :simulation_bh_grade, max: 100, min: 0, class:'form-control' %>
+        <%= form.number_field :simulation_bh_grade, max: 100, min: 0, class:'form-control', required: true %>
       <% end %>
     </div>
     <div class="col-6">
@@ -47,7 +47,7 @@
       <% if @course_student.simulation_inv_grade > 0 %>
         <%= form.number_field :simulation_inv_grade, disabled: true, class:'form-control' %>
       <% else %>
-        <%= form.number_field :simulation_inv_grade,max: 100, min: 0, class:'form-control' %>
+        <%= form.number_field :simulation_inv_grade,max: 100, min: 0, class:'form-control', required: true %>
       <% end %>
     </div>
     <div class="col-6">
@@ -55,7 +55,7 @@
       <% if @course_student.simulation_inv_grade_date.nil? %>
         <%= form.date_field :simulation_inv_grade_date, class:'form-control' %>
       <% else %>
-        <%= form.date_field :simulation_inv_grade_date, disabled: true, class:'form-control' %>
+        <%= form.date_field :simulation_inv_grade_date, disabled: true, class:'form-control', required: true %>
       <% end %>
     </div>
   </div>
@@ -66,7 +66,7 @@
       <% if @course_student.final_grade > 0 %>
         <%= form.number_field :final_grade, disabled: true, class:'form-control' %>
       <% else %>
-        <%= form.number_field :final_grade, max: 100, min: 0, class:'form-control' %>
+        <%= form.number_field :final_grade, max: 100, min: 0, class:'form-control', required: true %>
       <% end %>
     </div>
     <div class="col-6">
@@ -83,7 +83,7 @@
     <div class="col-6">
       <%= form.label :remedial_exam_note, 'Nota examen recuperatorio' %>
       <% if @puede_recuperar %>
-        <%= form.number_field :remedial_exam_note, max: 100, min: 0, class:'form-control' %>
+        <%= form.number_field :remedial_exam_note, max: 100, min: 0, class:'form-control', required: true %>
         <!-- tengo que mostrar la fecha hasta q puede recuperar y si se paso la fecha avisar q ya fue -->
         <span class="badge badge-danger"> <%= @msg_badge %> </span>
       <% else %>
@@ -93,9 +93,9 @@
     <div class="col-6">
       <%= form.label :remedial_exam_note_date, 'Fecha' %>
       <% if @puede_recuperar && !@fecha_retest_examen.nil?  %>
-        <%= form.date_field :remedial_exam_note_date, class:'form-control', value: "#{@fecha_retest_examen}" %>
+        <%= form.date_field :remedial_exam_note_date, class:'form-control', required: true, value: "#{@fecha_retest_examen}" %>
       <% elsif @puede_recuperar %>
-        <%= form.date_field :remedial_exam_note_date, class:'form-control' %>
+        <%= form.date_field :remedial_exam_note_date, class:'form-control', required: true %>
       <% else %>
         <%= form.date_field :remedial_exam_note_date, disabled: true, class:'form-control' %>
       <% end %>

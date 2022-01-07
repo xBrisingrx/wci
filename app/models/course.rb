@@ -43,6 +43,9 @@ class Course < ApplicationRecord
   		errors.add(:id, "No se pudo eliminar este curso") 
   end
 
+  def finished?
+  	self.finish_date < Date.today
+  end
 
 	private 
 

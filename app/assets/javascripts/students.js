@@ -39,6 +39,7 @@ $(document).ready(function(){
   })
 
   student_courses_table = $("#student-courses-table").DataTable({
+    'ordering': false,
     'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
   })
 

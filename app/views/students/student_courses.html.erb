@@ -16,11 +16,16 @@
           <th>Instructor</th>
           <th>Nivel</th>
           <th>Modo</th>
+          <th>Certificado</th>
       </thead>
       <tbody>
         <% @student.course_students.each do |c| %>
           <tr>
-            <td><%= @status[c.status] %></td>
+            <% if c.is_retest %>
+              <td><%= @status[c.status] %> <span class="u-label g-bg-darkpurple g-mr-10">Retest</span> </td>
+            <% else %>
+              <td><%= @status[c.status] %></td>
+            <% end %>
             <td><%= c.course.program.code %></td>
             <td><%= c.course.program.name %></td>
             <td><%= c.course.start_date %></td>
@@ -28,6 +33,14 @@
             <td><%= c.course.teacher.name %></td>
             <td><%= c.course.course_level.name %></td>
             <td><%= c.course.course_type.name %></td>
+            <% if c.pass? %>
+              <td>
+                <%= link_to '<i class="fa fa-file-pdf-o"></i>'.html_safe, certificado_wci_path(c, format: :pdf), 
+                    'class' => 'btn btn-sm u-btn-primary', title: 'Ver PDF', target: '_blank' %>
+              </td>
+            <% else %>
+              <td></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

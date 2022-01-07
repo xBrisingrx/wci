@@ -1,0 +1,19 @@
+$("#modal-course-students").html("<%= j (render 'partials/modal') %>")
+
+$("#modal-course-students").modal('show')
+
+
+$("#form-student-califications").on("ajax:success", function(event) {
+    let msg = JSON.parse(event.detail[2].response)
+    if (msg.status === 'success') {
+      course_students_table.ajax.reload(null,false)
+      retest_table.ajax.reload(null,false)
+      noty_alert(msg.status, msg.msg)
+    }
+    $("#modal-course-students").modal('hide')
+  }).on("ajax:error", function(event) {
+	let msg = JSON.parse( event.detail[2].response )
+	$.each( msg, function( key, value ) {
+		noty_alert('error', value)
+	})
+})

@@ -3,16 +3,15 @@ $('.form-select').select2({ width: '80%', theme: "bootstrap4" })
 $("#modal-course-students").modal('show')
 
 $("#form-course-student").on("ajax:success", function(event) {
-	console.log('success')
     course_students_table.ajax.reload(null,false)
     let msg = JSON.parse(event.detail[2].response)
     noty_alert(msg.status, msg.msg)
     $("#modal-course-students").modal('hide')
   }).on("ajax:error", function(event) {
 	let msg = JSON.parse( event.detail[2].response )
-	console.log(msg)
 	$.each( msg, function( key, value ) {
 		$(`#form-course-student #course-student_${key}`).addClass('is-invalid')
 		$(`#form-course-student .course-student_${key}`).text( value ).show('slow')
 	})
 })
+

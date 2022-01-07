@@ -1,0 +1,68 @@
+<%= form_with(url: create_course_student_retest_path, id: 'form-student-califications', class:'needs-validation') do |form| %>
+  
+  <%= form.hidden_field :course_id, value: @course_id %>
+  <%= form.hidden_field :course_student_id, value: @course_student.id %>
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :simulation_grade, 'Nota simulación Perf' %>
+      <%= form.number_field :simulation_grade, max: 100, min: 0, class:'form-control', disabled: :true, value: @course_student.simulation_grade %>
+    </div>
+    <div class="col-6">
+      <%= form.label :simulation_grade_date, 'Fecha' %>
+      <%= form.date_field :simulation_grade_date, disabled: true, class:'form-control', value: "#{@course_student.simulation_grade_date}" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :simulation_bh_grade, 'Nota simulación bh' %>
+      <%= form.number_field :simulation_bh_grade, disabled: true, class:'form-control', value: @course_student.simulation_bh_grade %>
+    </div>
+    <div class="col-6">
+      <%= form.label :simulation_bh_grade_date, 'Fecha' %>
+      <%= form.date_field :simulation_bh_grade_date, disabled: true, class:'form-control', value: "#{@course_student.simulation_bh_grade_date}" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :simulation_inv_grade, 'Nota simulación inv' %>
+      <%= form.number_field :simulation_inv_grade, disabled: true, class:'form-control', value: @course_student.simulation_inv_grade%>
+    </div>
+    <div class="col-6">
+      <%= form.label :simulation_inv_grade_date, 'Fecha' %>
+      <%= form.date_field :simulation_inv_grade_date, disabled: true, class:'form-control', value: "#{@course_student.simulation_inv_grade_date}" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :final_grade, 'Nota examen final' %>
+      <%= form.number_field :final_grade, disabled: true, class:'form-control', value: "#{@course_student.final_grade}" %>
+    </div>
+    <div class="col-6">
+      <%= form.label :final_grade_date, 'Fecha' %>
+      <%= form.date_field :final_grade_date, class:'form-control', disabled: true, value: "#{@course_student.final_grade_date}" %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      <%= form.label :remedial_exam_note, 'Nota examen recuperatorio' %>
+      <% if @puede_recuperar %>
+        <%= form.number_field :remedial_exam_note, max: 100, min: 0, class:'form-control', value: @course_student.remedial_exam_note, required: true %>
+        <span class="badge badge-danger"> <%= @msg_badge %> </span>
+      <% else %>
+        <%= form.number_field :remedial_exam_note, disabled: true, class:'form-control' %>
+      <% end %>
+    </div>
+    <div class="col-6">
+      <%= form.label :remedial_exam_note_date, 'Fecha' %>
+      <%= form.date_field :remedial_exam_note_date, class:'form-control', value: "#{@fecha_retest_examen}", required: true %>
+    </div>
+  </div>
+  <div class="mt-2">
+    <%= form.submit 'Guardar', class: 'btn btn-primary mr-2', id: 'btn-save-retest'  %>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+  </div>
+<% end %>

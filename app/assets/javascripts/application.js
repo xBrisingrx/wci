@@ -34,6 +34,7 @@
 //= require students
 //= require teachers
 //= require courses
+//= require courses_finished
 //= require course_levels
 //= require course_students
 //= require companies

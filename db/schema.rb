@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_06_213930) do
+ActiveRecord::Schema.define(version: 2021_12_24_170848) do
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -56,9 +56,11 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
     t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "remedial_course"
+    t.bigint "remedial_course_id"
+    t.boolean "is_retest", default: false
+    t.boolean "retest_pending", default: true
     t.index ["course_id"], name: "index_course_students_on_course_id"
-    t.index ["remedial_course"], name: "fk_rails_be23097bf7"
+    t.index ["remedial_course_id"], name: "fk_rails_be23097bf7"
     t.index ["student_id"], name: "index_course_students_on_student_id"
   end
 
@@ -142,7 +144,7 @@ ActiveRecord::Schema.define(version: 2021_12_06_213930) do
   end
 
   add_foreign_key "course_students", "courses"
-  add_foreign_key "course_students", "courses", column: "remedial_course"
+  add_foreign_key "course_students", "courses", column: "remedial_course_id"
   add_foreign_key "course_students", "students"
   add_foreign_key "courses", "course_levels"
   add_foreign_key "courses", "course_types"

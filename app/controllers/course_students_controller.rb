@@ -1,5 +1,5 @@
 class CourseStudentsController < ApplicationController
-  before_action :set_course_student, only: %i[ edit update destroy get_notes_student show_certification certificado_wci ]
+  before_action :set_course_student, only: %i[ edit update destroy get_notes_student show_certification certificado_wci get_notes_student_retest ]
   before_action :set_name_enums, only: %i[ show get_student_retest ]
   before_action :set_active_menu, only: %i[ show show_certification ]
   skip_before_action :no_login, only: %i[ show_certification  ]
@@ -17,7 +17,7 @@ class CourseStudentsController < ApplicationController
       ]
     @course = Course.select('id, finish_date, program_id, course_type_id').find(params[:id])
     @program = Program.select('name').find(@course.program_id)
-    @course_students = CourseStudent.where(active: true,course_id: params[:id]).or( CourseStudent.where(remedial_course: params[:id]) ).includes(:student)
+    @course_students = CourseStudent.where(active: true,course_id: params[:id]).includes(:student)
     @countries = Country.all.order(:name)
     @companies = Company.where(active: true).order(:name)
   end
@@ -32,6 +32,9 @@ class CourseStudentsController < ApplicationController
                                     .where.not(course_students: { course_id: params[:id] })
                                     .where(course_students: { active: true })
                                     .where(course_students: {status: :no_pass})
+                                    .where(course_students: {retest_pending: true})
+                                    .where('course_students.final_grade >= 60')
+                                    .where('course_students.final_grade_date <= ?', limit_date) 
                                       .includes(:student)
   end
 
@@ -39,7 +42,7 @@ class CourseStudentsController < ApplicationController
   def new
     @course_student = CourseStudent.new
     @course_student.course_id = params[:course_id]
-    @students = Student.where(active: true)
+    @students = Student.where(active: true).order(:lastname)
     @title_modal = 'Inscribir alumno'
     @render = 'form'
   end
@@ -123,6 +126,11 @@ class CourseStudentsController < ApplicationController
       if course_student_params[:final_grade] < '70'
         @course_student.status = 'no_pass'
       end
+
+      if course_student_params[:final_grade].to_i.between?(50,69)
+        # Si desaprueba y esta entre los valores para poder hacer retest lo ponemos como pendiente de retest
+        @course_student.retest_pending = true
+      end
     end
 
     if !course_student_params[:remedial_exam_note].nil? && @course_student.remedial_exam_note != course_student_params[:remedial_exam_note].to_i
@@ -138,9 +146,8 @@ class CourseStudentsController < ApplicationController
           # acciones para alumnos aprobados
           @course_student.update!(status: 1)
           @msg = 'Alumno aprobado, pdf generado'
-          dir = Rails.root.join("app/assets/images/certificates/students/#{ @course_student.id}")
-          n_certificado = @course_student.course.program.certificate
-          generar_pdf @course_student, dir, n_certificado
+
+          generar_pdf @course_student
           
         end # if QR 
 
@@ -166,7 +173,7 @@ class CourseStudentsController < ApplicationController
   end
 
   def disable
-    @course_student = CourseStudent.find(params[:course_student][:id])
+    @course_student = CourseStudent.find(params[:course_students][:id])
     if @course_student.update!(active: false)
       render json: { status: 'success', msg: 'Alumno eliminado' }, status: :ok
     else
@@ -202,11 +209,11 @@ class CourseStudentsController < ApplicationController
       @fecha_nota_examen = @course_student.course.finish_date
     end
 
-    if !params[:course_retest_id].nil?
-      course = Course.find(params[:course_retest_id])
-      @fecha_retest_examen = course.finish_date
-      @retest_id = course.id
-    end
+    # if !params[:course_retest_id].nil?
+    #   course = Course.find(params[:course_retest_id])
+    #   @fecha_retest_examen = course.finish_date
+    #   @retest_id = course.id
+    # end
 
     @fecha_final_curso = @course_student.course.finish_date
     if @course_student.final_grade.between?(50,69)
@@ -217,19 +224,94 @@ class CourseStudentsController < ApplicationController
         @msg_badge = "Caduco el tiempo para recuperar"
       end
     end
+  end
+
+  def get_notes_student_retest
+    @title_modal = 'Cargar notas de retest'
+    @render = 'form_certifications_retest'
+    limit_date = @course_student.course.finish_date + 45.days
+    @puede_recuperar = false
+
+    # Este el el curso en donde recuperamos 
+    course = Course.find(params[:course_retest_id])
+    @fecha_retest_examen = course.finish_date
+    @course_id = course.id
+    @fecha_final_curso = @course_student.course.finish_date
+
+    if @course_student.final_grade.between?(50,69)
+      if (limit_date > Date.today)
+        @msg_badge = "Tiene tiempo de recuperar hasta la fecha #{limit_date.strftime('%d-%m-%Y')}"
+        @puede_recuperar = true
+      else
+        @msg_badge = "Caduco el tiempo para recuperar"
+      end
+    end
+  end
+
+  def create_course_student_retest
+  if params[:remedial_exam_note].to_i == 0
+    return render json: { 'status' => 'noChanges', 'msg' => '' }
+  end
+  course_student = CourseStudent.find(params[:course_student_id])
+    course_student_retest = CourseStudent.new(
+     student_id: course_student.student_id,
+     course_id: params[:course_id],
+     remedial_course_id: course_student.course.id,
+     simulation_grade: params[:simulation_grade].to_i,
+     simulation_grade_date: params[:simulation_grade_date],
+     simulation_bh_grade: params[:simulation_bh_grade].to_i,
+     simulation_bh_grade_date: params[:simulation_bh_grade_date],
+     simulation_inv_grade: params[:simulation_inv_grade].to_i,
+     simulation_inv_grade_date: params[:simulation_inv_grade_date],
+     final_grade: course_student.final_grade, 
+     final_grade_date: course_student.final_grade_date,
+     remedial_exam_note: params[:remedial_exam_note],
+     remedial_exam_note_date: params[:remedial_exam_note_date],
+     status: (params[:remedial_exam_note].to_i >= 70) ? :pass : :no_pass,
+     is_retest: true,
+     retest_pending: false )
     
-    # @msg_badge = (limit_date > Date.today) ? "Tiene tiempo de recuperar hasta la fecha #{limit_date.strftime('%d-%m-%Y')}" : "Caduco el tiempo para recuperar"  
+    respond_to do |format|
+      if course_student_retest.save! && course_student.update!(retest_pending: false)
+        if course_student_retest.pass?
+          generar_pdf course_student_retest
+        end
+        format.json { render json: { 'status' => 'success', 'msg' => 'Retest registrado' }, status: :ok}
+      else
+        format.json { render json: { 'status' => 'error', 'msg' => 'No se pudo registrar el retest' }, status: :unprocessable_entity}
+      end # save
+    end # respond to
+
+    rescue => e
+      raise_message = e.message.split(':')
+      resp = raise_message[1].split(', ')
+      @response = Hash.new
+
+      resp.each do |msg|
+        @response[msg.split.first.downcase] = msg.split(' ')[1..-1].join(' ')
+      end
+      
+      render json: @response, status: 402
   end
  
 
   def certificado_wci
+  
     respond_to do |format|
-      format.pdf do
+      if File.exist?( Rails.root.join("app/assets/images/certificates/students/#{ @course_student.id}/certificado_qr.pdf" ) )
+        format.pdf do
+            send_file( Rails.root.join("app/assets/images/certificates/students/#{ @course_student.id}/certificado_qr.pdf"), 
+                       filename: 'certificado.pdf', type: 'application/pdf', disposition: 'attachment')
+        end
+      else
+        format.pdf do 
+          generar_pdf @course_student
           send_file( Rails.root.join("app/assets/images/certificates/students/#{ @course_student.id}/certificado_qr.pdf"), 
-                     filename: 'certificado.pdf', type: 'application/pdf', disposition: 'attachment')
+                       filename: 'certificado.pdf', type: 'application/pdf', disposition: 'attachment')
+        end
       end
-    end
-  end
+    end #respond to
+  end #certificado wci
 
   def show_certification
     @vencimiento = @course_student.course.finish_date + 2.years
@@ -240,17 +322,20 @@ class CourseStudentsController < ApplicationController
       ]
   end
 
-  def generar_pdf course_student,dir, n_certificado
+  def generar_pdf course_student
     id = course_student.id
+    dir = Rails.root.join("app/assets/images/certificates/students/#{ course_student.id}")
+    n_certificado = course_student.course.program.certificate
+
     generar_qr(id,dir)
     certificado = Rails.root.join("app/assets/images/certificates/certificados/certificado0#{n_certificado}.pdf")
 
-    if course_student.remedial_course.nil?
+    if course_student.remedial_course_id.nil?
       #aprobo a la primera
       fecha = course_student.course.finish_date
     else
       # aprobo en retest
-      fecha = Course.find( course_student.remedial_course ).finish_date
+      fecha = Course.find( course_student.remedial_course_id ).finish_date
     end
 
     vencimiento = fecha + 2.years
@@ -307,12 +392,10 @@ class CourseStudentsController < ApplicationController
     if File.exist?( dir )
       IO.binwrite("#{dir}/qr_url.png", png.to_s)
     else
-      retorno = Dir.mkdir( dir )
+      Dir.mkdir( dir )
       IO.binwrite("#{dir}/qr_url.png", png.to_s)
     end
   end
-
-
 
   private
     def set_course_student
@@ -331,8 +414,6 @@ class CourseStudentsController < ApplicationController
     def course_student_params
       params.require(:course_student).permit(:simulation_grade,:simulation_grade_date, :simulation_bh_grade, :simulation_bh_grade_date,
        :simulation_inv_grade,:simulation_inv_grade_date,:final_grade,:final_grade_date,:remedial_exam_note,:remedial_exam_note_date,
-       :status,:comment,:active,:student_id, :course_id, :remedial_course)
+       :status,:comment,:active,:student_id, :course_id, :remedial_course_id)
     end
 end
-
-

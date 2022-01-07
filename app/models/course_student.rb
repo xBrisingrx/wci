@@ -24,8 +24,8 @@
 class CourseStudent < ApplicationRecord
   belongs_to :student
   belongs_to :course
-  # belongs_to :remedial_course, class_name:  :Course, :foreign_key => 'remedial_course', optional: true
-
+  belongs_to :restest, class_name:  :Course, :foreign_key => 'remedial_course_id', optional: true
+  # Validacion de unisidad con scope
   enum status: [:pending, :pass, :no_pass, :absent]
   # singleton_class.undef_method :open # hide Kernel.open, avoiding a warning when defining scope :open
   # scope :open, -> { where(status: [:pending, :pass, :fail]) }
@@ -37,11 +37,15 @@ class CourseStudent < ApplicationRecord
   validate :estudiante_repetido, on: :create
   # validate :course_ended, on: :create 
 
+  def get_retest
+    # retornamos la info del curso donde hizo retest 
+    Course.find(self.remedial_course)
+  end
 
   private
   def estudiante_repetido
     # un alumno no puede estar mas de una vez en el mismo curso
-    student = CourseStudent.where(course_id: self.course_id, student_id: self.student_id)
+    student = CourseStudent.where(course_id: self.course_id, student_id: self.student_id, active: true)
     #if !student.nil?
     if !(student.count == 0)
       errors.add(:student_id, "Este alumno ya se encuentra registrado en este curso")
