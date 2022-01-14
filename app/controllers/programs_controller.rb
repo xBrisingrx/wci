@@ -4,7 +4,7 @@ class ProgramsController < ApplicationController
   # GET /programs or /programs.json
   def index
     @programs = Program.where(active: true)
-    @nav_active = [:clients=> '', :courses=> '', :programs=> 'active']
+    @nav_active = [:clients=> '', :courses=> '', :programs=> 'active', :teachers => '']
     @breadcrumbs = [
       [ :name =>'Programas', :path => programs_path],
     ]

@@ -8,7 +8,7 @@ class CompaniesController < ApplicationController
       [ :name =>'Clientes', :path => students_path],
       [ :name =>'Empresas', :path => companies_path] 
     ]
-    @nav_active = [:clients=> 'active', :courses=> '', :programs=> '']
+    @nav_active = [:clients=> 'active', :courses=> '', :programs=> '', :teachers => '']
   end
 
   # GET /companies/1 or /companies/1.json

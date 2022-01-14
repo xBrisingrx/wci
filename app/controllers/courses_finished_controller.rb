@@ -6,6 +6,6 @@ class CoursesFinishedController < ApplicationController
       [ :name =>'Cursos', :path => courses_path],
       [ :name =>'Cursos finalizados', :path => ''] 
     ]
-    @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']
+    @nav_active = [:clients=> '', :courses=> 'active', :programs=> '', :teachers => '']
   end
 end

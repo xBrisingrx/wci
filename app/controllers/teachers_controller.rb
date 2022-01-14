@@ -4,6 +4,10 @@ class TeachersController < ApplicationController
   # GET /teachers or /teachers.json
   def index
     @teachers = Teacher.where(active:true).order(:name)
+    @breadcrumbs = [
+      [ :name =>'Instructores', :path => teachers_path] 
+    ]
+    @nav_active = [:clients=> '', :courses=> '', :programs=> '', :teachers => 'active']
   end
 
   # GET /teachers/1 or /teachers/1.json

@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
     @courses = Course.where(active: :true).where("finish_date >= '#{ limit_date }'")
     @title_modal = 'Alumnos en este curso'
     @breadcrumbs = [ [ :name =>'Cursos', :path => students_path ] ]
-    @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']
+    @nav_active = [:clients=> '', :courses=> 'active', :programs=> '', :teachers => '']
   end
 
   # GET /courses/1 or /courses/1.json

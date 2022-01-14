@@ -34,7 +34,9 @@
               </ul>
               <!-- End Submenu -->
             </li>
-
+            <li class="nav-item g-mx-20--lg g-mb-5 g-mb-0--lg <%= @nav_active[0][:teachers] %>">
+              <%= link_to 'Instructores', teachers_path, class: 'nav-link'%>
+            </li>
             <li class="nav-item hs-has-sub-menu g-mx-20--lg g-mb-5 g-mb-0--lg <%= @nav_active[0][:courses] %>">
               <%= link_to 'Cursos', courses_path, class: 'nav-link', id: 'courses-link', 
                 aria: { haspopup: 'true', expanded: 'false', controls: 'courses-submenu' } %>
