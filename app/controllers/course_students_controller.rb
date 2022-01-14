@@ -349,7 +349,7 @@ class CourseStudentsController < ApplicationController
       'Instructor' => course_student.course.teacher.name,
       'N de Programa' => course_student.course.program.code,
       'Proveedor' => 'Well Control International',
-      'Fecha de Finalizacion' => fecha,
+      'Fecha de Finalizacion' => fecha.strftime('%d-%m-%Y'),
       'Fecha de Vencimiento' => vencimiento.strftime('%d-%m-%Y'),
       'Presencial' => course_student.course.course_type.name
     }
