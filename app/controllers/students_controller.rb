@@ -4,7 +4,7 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    @students = Student.where(active:true)
+    @students = Student.where(active:true).includes(:company)
     @breadcrumbs = [
       [ :name =>'Clientes', :path => students_path],
       [ :name =>'Alumnos', :path => students_path] 

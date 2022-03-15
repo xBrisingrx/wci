@@ -296,7 +296,6 @@ class CourseStudentsController < ApplicationController
  
 
   def certificado_wci
-  
     respond_to do |format|
       if File.exist?( Rails.root.join("app/assets/images/certificates/students/#{ @course_student.id}/certificado_qr.pdf" ) )
         format.pdf do
@@ -310,7 +309,7 @@ class CourseStudentsController < ApplicationController
                        filename: 'certificado.pdf', type: 'application/pdf', disposition: 'attachment')
         end
       end
-    end #respond to
+    end #respond todata
   end #certificado wci
 
   def show_certification
@@ -321,6 +320,7 @@ class CourseStudentsController < ApplicationController
         [ :name =>'Certificado', :path => '']
       ]
   end
+
 
   def generar_pdf course_student
     id = course_student.id
@@ -343,10 +343,7 @@ class CourseStudentsController < ApplicationController
     dni_student = course_student.student.dni 
 
     data = {
-      'Nombre del Alumno' => course_student.student.fullname,
-      'Nombre del Curso' => course_student.course.program.name,
       'n_certificado' => "WC-#{dni_student}-#{program_code}",
-      'Instructor' => course_student.course.teacher.name,
       'N de Programa' => course_student.course.program.code,
       'Proveedor' => 'Well Control International',
       'Fecha de Finalizacion' => fecha.strftime('%d-%m-%Y'),
@@ -354,22 +351,36 @@ class CourseStudentsController < ApplicationController
       'Presencial' => course_student.course.course_type.name
     }
 
-      pdftk = PdfForms.new('/usr/bin/pdftk')
-      pdftk.get_field_names "#{certificado}"
-      pdftk.fill_form "#{certificado}", "#{dir}/#{id}.pdf", data, :flatten => true
-      
-      doc = HexaPDF::Document.open("#{dir}/#{id}.pdf")
-      page = doc.pages[0]
+    pdftk = PdfForms.new('/usr/bin/pdftk', :data_format => 'FdfHex', :utf8_fields => true)
 
-      canvas = page.canvas(type: :overlay)
-      canvas.image(File.join("#{dir}", 'qr_url.png'), at: [350, 50], height: 100)
+    pdftk.get_field_names "#{certificado}"
+    fields_names_form = pdftk.get_field_names "#{certificado}"
 
-      page2 = doc.pages[1]
+    pdftk.fill_form "#{certificado}", "#{dir}/#{id}.pdf", data , :flatten => true
+    
+    doc = HexaPDF::Document.open("#{dir}/#{id}.pdf")
+    page = doc.pages[0]
 
-      canvas2 = page2.canvas(type: :overlay)
-      canvas2.image( File.join( "#{dir}", 'qr_url.png' ), at: [220, 620], height: 80)
+    canvas = page.canvas(type: :overlay)
+    canvas.image(File.join("#{dir}", 'qr_url.png'), at: [350, 50], height: 100)
 
-      doc.write("#{dir}/certificado_qr.pdf", optimize: true)
+    canvas.font('Helvetica', size: 14).text(course_student.course.program.name, at: [58, 382])
+    canvas.font('Helvetica', size: 14).text(course_student.course.teacher.name, at: [327, 330])
+
+    tf = HexaPDF::Layout::TextFragment.create( course_student.student.fullname,
+                                            font: doc.fonts.add("Helvetica"), font_size: 16)
+    tl = HexaPDF::Layout::TextLayouter.new
+
+    tl.style.align(:center).valign(:center)
+    tl.fit([tf], 495, 17).draw(canvas, 58, 445)
+    canvas.stroke_color(0, 0, 0).rectangle(58, 431, 495, 30)
+
+    page2 = doc.pages[1]
+    canvas2 = page2.canvas(type: :overlay)
+    canvas2.image( File.join( "#{dir}", 'qr_url.png' ), at: [220, 620], height: 80)
+    canvas2.font('Helvetica', size: 8).text("#{course_student.student.fullname}", at: [345, 717])
+    canvas2.font('Helvetica', size: 8).text(course_student.course.program.name, at: [340, 700])
+    doc.write("#{dir}/certificado_qr.pdf", optimize: true)
   end
 
   def generar_qr id, dir
