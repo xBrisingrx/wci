@@ -1,7 +1,9 @@
 <h1>Cursos</h1>
+<%= link_to 'Generar certificado', new_certificate_path, {:remote => true, 'data-toggle' =>  "modal",
+      'data-target' => '#modal-course', 'class' => 'btn u-btn-teal justify-content-end mb-2'} %>
 <%= link_to 'Agregar curso', new_course_path, {:remote => true, 'data-toggle' =>  "modal",
-      'data-target' => '#modal-course', 'class' => 'btn u-btn-primary justify-content-end mb-2'} %>
-<%= link_to 'Ver cursos finalizados', courses_finished_path, class: 'btn u-btn-cyan justify-content-end mb-2 ml-2' %>
+      'data-target' => '#modal-course', 'class' => 'btn u-btn-primary justify-content-end mb-2 ml-4'} %>
+<%= link_to 'Ver cursos finalizados', courses_finished_path, class: 'btn u-btn-cyan justify-content-end mb-2 ml-4' %>
 
 <!-- courses table -->
 <div class="card g-brd-blue rounded-0 g-mb-30">

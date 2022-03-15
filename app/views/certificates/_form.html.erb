@@ -1,0 +1,51 @@
+<%= form_with(url: certificates_path ,id: 'form-certificate' , class: 'needs-validation') do |form| %>
+  <div class="form-group row">
+    <div class="col-6">
+      <%= form.label :student_name, 'Alumno:' ,class: 'col-6' %>
+      <%= form.text_field :student_name, class: 'form-control form-control-sm', required: true %>
+      <div class="invalid-feedback certificate_student_name"></div>
+    </div>
+    <div class="col-6">
+      <%= form.label :dni, 'DNI:' ,class: 'col-6' %>
+      <%= form.text_field :dni, class: 'form-control form-control-sm', required: true %>
+      <div class="invalid-feedback certificate_dni"></div>
+    </div>
+  </div>
+
+ <div class="row">
+    <div class="col-6">
+      <%= form.label :teacher_name, 'Instructor:' %>
+      <%= form.select(:teacher_name, @teachers.collect {|c| ["#{c.name}", c.name]}, 
+                      {:include_blank => "Seleccione instructor"},
+                      class: 'select-2-companies form-select', required: true) %>
+      <div class="invalid-feedback certificate_teacher_name"></div>
+    </div>
+    <div class="col-6">
+      <%= form.label :program_id, 'Programa:' %>
+      <%= form.select(:program_id, @programs.collect {|p| ["#{p.code} - #{p.name}", p.id]}, 
+                      {:include_blank => "Seleccione programa"},
+                      class: 'select-2-countries form-select', required: true) %>
+      <div class="invalid-feedback certificate_program_id"></div>
+    </div>
+  </div>
+
+  <div class="form-group row mt-2">
+    <div class="col-6">
+      <%= form.label :course_type, 'Metodologia:' %>
+      <%= form.select(:course_type, @type.collect {|c| ["#{c.name}", c.name]}, 
+                      {:include_blank => "Seleccione metodologia"},
+                      class: 'select-2-companies form-select', required: true) %>
+      <div class="invalid-feedback certificate_course_type"></div>
+    </div>
+    <div class="col-6">
+      <%= form.label :finish_date, 'Fecha finalizacion:' ,class: 'col-6' %>
+      <%= form.date_field :finish_date, class: 'form-control form-control-sm', required: true %>
+      <div class="invalid-feedback certificate_finish_date"></div>
+    </div>
+  </div>
+
+  <div class="actions mt-2">
+    <%= form.submit 'Guardar', class: 'btn btn-primary mr-2'  %>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+  </div>
+<% end %>

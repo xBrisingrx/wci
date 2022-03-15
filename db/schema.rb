@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_24_170848) do
+ActiveRecord::Schema.define(version: 2022_03_15_194937) do
+
+  create_table "certificates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.date "start_date", null: false
+    t.date "finish_date", null: false
+    t.string "student", null: false
+    t.string "teacher", null: false
+    t.string "mode", null: false
+    t.string "program_number", null: false
+    t.string "course", null: false
+    t.string "number", null: false
+    t.string "path"
+    t.bigint "program_id"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["program_id"], name: "index_certificates_on_program_id"
+  end
 
   create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
@@ -143,6 +160,7 @@ ActiveRecord::Schema.define(version: 2021_12_24_170848) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "certificates", "programs"
   add_foreign_key "course_students", "courses"
   add_foreign_key "course_students", "courses", column: "remedial_course_id"
   add_foreign_key "course_students", "students"
