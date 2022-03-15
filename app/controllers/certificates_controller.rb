@@ -1,5 +1,5 @@
 class CertificatesController < ApplicationController
-
+  skip_before_action :no_login, only: %i[ show_pdf  ]
 	def index
 		@breadcrumbs = [
         [ :name =>'Cursos', :path => courses_path],
