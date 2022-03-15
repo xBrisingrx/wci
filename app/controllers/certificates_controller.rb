@@ -1,5 +1,14 @@
 class CertificatesController < ApplicationController
 
+	def index
+		@breadcrumbs = [
+        [ :name =>'Cursos', :path => courses_path],
+        [ :name =>'Certificados', :path => '']
+      ]
+    @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']
+    @certificates = Certificate.where(active: true)
+	end
+
 	def new
 		@teachers = Teacher.where(active:true).order(:name)
 		@programs = Program.select('id, name, code').where(active:true).order(:name)
@@ -26,6 +35,7 @@ class CertificatesController < ApplicationController
 
 		if certificate.save
 			generar_pdf( certificate, program.certificate ) 
+			render json: { 'status' => 'success', msg: 'Certificado generado', 'url_pdf' => mostrar_pdf_path(certificate.id)}
 		end
 	end
 
@@ -38,9 +48,16 @@ class CertificatesController < ApplicationController
     @certificate = Certificate.find(params[:id])
 	end
 
+	def show_pdf
+		certificate = Certificate.find(params[:id])
+		send_file( Rails.root.join("app/#{certificate.path}/certificado_qr.pdf"), 
+                       filename: 'certificado.pdf', type: 'application/pdf', disposition: 'attachment')
+	end
+
 	def get_certificado
 		puts 'get'
 	end
+
 
   def generar_pdf certificate, n_certificado
     id = certificate.id

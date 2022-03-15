@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     post 'create_and_register_student', to: 'course_students#create_and_register_student', as: 'create_and_register_student'
     get 'get_student_retest/:id', to: 'course_students#get_student_retest', as: 'get_student_retest'  
 
-  resources :certificates, only: [:new, :create, :show]
+  resources :certificates, only: [:index, :new, :create, :show]
     get 'certificates/:id', to: 'certificates#get_certificado', as: 'get_certificado'
+    get 'mostrar_pdf/:id', to: 'certificates#show_pdf', as: 'mostrar_pdf'
 end

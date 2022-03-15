@@ -38,6 +38,7 @@
 //= require course_levels
 //= require course_students
 //= require companies
+//= require certificates
 
 // require_tree .
 

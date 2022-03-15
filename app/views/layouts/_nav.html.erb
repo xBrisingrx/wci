@@ -41,6 +41,7 @@
               <%= link_to 'Cursos', courses_path, class: 'nav-link', id: 'courses-link', 
                 aria: { haspopup: 'true', expanded: 'false', controls: 'courses-submenu' } %>
               <ul class="hs-sub-menu list-unstyled g-mt-20--lg g-mt-10--lg--scrolling" id="courses-submenu" aria-labelledby="nav-link-1">
+                <li><%= link_to 'Certificados', certificates_path, class: 'nav-link' %></li>
                 <li><%= link_to 'Niveles', course_levels_path, class: 'nav-link' %></li>
               </ul>
             </li>

@@ -5,6 +5,8 @@ $("#modal-course").modal('show')
 $("#form-certificate").on("ajax:success", function(event) {
     let msg = JSON.parse(event.detail[2].response)
     noty_alert(msg.status, msg.msg)
+    window.open(msg.url_pdf, '_blank')
+    certificates_table.ajax.reload(null,false)
     $("#modal-course").modal('hide')
   }).on("ajax:error", function(event) {
 	let msg = JSON.parse( event.detail[2].response )
