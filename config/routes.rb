@@ -36,6 +36,8 @@ Rails.application.routes.draw do
     post 'absent_student/:id', to: 'course_students#absent_student', as: 'absent_student'
     get 'register_student', to: 'course_students#register_student', as: 'register_student'
     post 'create_and_register_student', to: 'course_students#create_and_register_student', as: 'create_and_register_student'
-    get 'get_student_retest/:id', to: 'course_students#get_student_retest', as: 'get_student_retest'
+    get 'get_student_retest/:id', to: 'course_students#get_student_retest', as: 'get_student_retest'  
 
+  resources :certificates, only: [:new, :create, :show]
+    get 'certificates/:id', to: 'certificates#get_certificado', as: 'get_certificado'
 end
