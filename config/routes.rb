@@ -41,4 +41,5 @@ Rails.application.routes.draw do
   resources :certificates, only: [:index, :new, :create, :show]
     get 'certificates/:id', to: 'certificates#get_certificado', as: 'get_certificado'
     get 'mostrar_pdf/:id', to: 'certificates#show_pdf', as: 'mostrar_pdf'
+    post '/certificates/disable'
 end
