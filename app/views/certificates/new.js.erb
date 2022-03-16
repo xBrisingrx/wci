@@ -12,7 +12,7 @@ $("#form-certificate").on("ajax:success", function(event) {
 	let msg = JSON.parse( event.detail[2].response )
   	console.log(msg)
 	$.each( msg, function( key, value ) {
-		$(`#form-course #course_${key}`).addClass('is-invalid')
-		$(`#form-course .course_${key}`).text( value ).show('slow')
+		$(`#form-certificate #certificate_${key}`).addClass('is-invalid')
+		$(`#form-certificate .certificate_${key}`).text( value ).show('slow')
 	})
 })

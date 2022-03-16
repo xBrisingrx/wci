@@ -23,6 +23,7 @@ class CertificatesController < ApplicationController
 		finish_date = Date.strptime(params[:finish_date],'%Y-%m-%d')
 
 		certificate.student = params[:student_name]
+    certificate.dni = params[:dni]
 		certificate.start_date = params[:finish_date]
 		certificate.finish_date = finish_date + 2.years
 		certificate.teacher = params[:teacher_name]
@@ -36,6 +37,8 @@ class CertificatesController < ApplicationController
 		if certificate.save
 			generar_pdf( certificate, program.certificate ) 
 			render json: { 'status' => 'success', msg: 'Certificado generado', 'url_pdf' => mostrar_pdf_path(certificate.id)}
+    else 
+      render json: { 'status' => 'error', msg: certificate.errors }
 		end
 	end
 
@@ -47,6 +50,19 @@ class CertificatesController < ApplicationController
     @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']
     @certificate = Certificate.find(params[:id])
 	end
+
+  def disable
+    certificate = Certificate.find(params[:certificate][:id])
+    if certificate.update!(active: false)
+      render json: { status: 'success', msg: 'Certificado eliminado' }, status: :ok
+    else
+      render json: { status: 'error', msg: 'Ocurrio un error al realizar la operación' }, status: :unprocessable_entity
+    end
+
+    rescue => e
+      @response = e.message.split(':')
+      render json: { @response[0] => @response[1] }, status: 402
+  end
 
 	def show_pdf
 		certificate = Certificate.find(params[:id])
@@ -74,8 +90,8 @@ class CertificatesController < ApplicationController
       'n_certificado' => certificate.number,
       'N de Programa' => certificate.program_number,
       'Proveedor' => 'Well Control International',
-      'Fecha de Finalizacion' => certificate.start_date.strftime('%d-%m-%Y'),
-      'Fecha de Vencimiento' => certificate.finish_date.strftime('%d-%m-%Y'),
+      'Fecha de Finalizacion' => I18n.l(certificate.start_date, format: '%d-%b-%Y' ),
+      'Fecha de Vencimiento' => I18n.l(certificate.finish_date, format: '%d-%b-%Y' ),
       'Presencial' => certificate.mode
     }
 

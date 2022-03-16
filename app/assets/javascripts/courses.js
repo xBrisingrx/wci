@@ -1,7 +1,6 @@
 let courses_table
 
 function modal_disable_course(id) {
-  console.info('cursito')
   $('#modal-disable-course #course_id').val(id)
   $('#modal-disable-course').modal('show')
 }

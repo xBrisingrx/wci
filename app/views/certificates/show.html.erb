@@ -16,8 +16,8 @@
       <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Instructor/Instructor: </b><%= @certificate.teacher %></li>
       <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Presencial/E-Learning: </b><%= @certificate.mode %></li>
       <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>N de programa/Program Numbre: </b><%= @certificate.program_number %></li>
-      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Fecha de finalizacion/Completion date: </b><%= @certificate.start_date.strftime('%d-%m-%Y') %></li>
-      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Fecha de vencimiento/Expiration date: </b><%= @certificate.finish_date.strftime('%d-%m-%Y') %></li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Fecha de finalizacion/Completion date: </b><%= I18n.l(@certificate.start_date, format: '%d-%b-%Y' ) %></li>
+      <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>Fecha de vencimiento/Expiration date: </b><%= I18n.l(@certificate.finish_date, format: '%d-%b-%Y' ) %></li>
       <li class="g-brd-bottom g-brd-gray-light-v3 g-py-10"><b>N de Certificado/Cartificate number: </b><%= @certificate.number %></li>
     </ul>
     <% if logged_in? %>

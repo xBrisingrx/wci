@@ -1,9 +1,8 @@
 let certificates_table
 
-function modal_disable_course(id) {
-  console.info('cursito')
-  $('#modal-disable-course #course_id').val(id)
-  $('#modal-disable-course').modal('show')
+function modal_disable_certificate(id) {
+  $('#modal-disable-certificate #certificate_id').val(id)
+  $('#modal-disable-certificate').modal('show')
 }
 
 $(document).ready(function(){
@@ -12,17 +11,18 @@ $(document).ready(function(){
     'columns': [
 	    {'data': 'course'},
 	    {'data': 'student'},
+      {'data': 'dni'},
       {'data': 'finish_date'},
 	    {'data': 'actions'}
     ],
     'language': {'url': "/assets/plugins/datatables/datatables_lang_spa.json"}
 	})
 
-  $("#form-disable-course").on("ajax:success", function(event) {
+  $("#form-disable-certificate").on("ajax:success", function(event) {
     certificates_table.ajax.reload(null,false)
     let msg = JSON.parse(event.detail[2].response)
     noty_alert(msg.status, msg.msg)
-    $("#modal-disable-course").modal('hide')
+    $("#modal-disable-certificate").modal('hide')
   }).on("ajax:error", function(event) {
     let msg = JSON.parse( event.detail[2].response )
     noty_alert(msg.status, msg.msg)

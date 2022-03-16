@@ -13,6 +13,7 @@
         <tr>
           <th>Curso</th>
           <th>Alumno</th>
+          <th>DNI</th>
           <th>Fecha fin curso</th>
           <th>Acciones</th>
       </thead>
@@ -28,3 +29,25 @@
      aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" >
 </div>
 <!-- End modal -->
+
+<!-- Modal para eliminar certificate -->
+<div class="modal fade" id="modal-disable-certificate" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">¿ Esta seguro de eliminar a la empresa ?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_with(url: certificates_disable_path, id: 'form-disable-certificate') %>
+          <input type="hidden" id="certificate_id" name="certificate[id]" value="">
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+          <button type="button" data-dismiss="modal" class="btn btn-info g-mr-10"> Cerrar </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fin modal eliminar certificate -->
