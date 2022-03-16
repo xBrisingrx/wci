@@ -4,6 +4,7 @@ class CreateCertificates < ActiveRecord::Migration[5.2]
       t.date :start_date, null: false
       t.date :finish_date, null: false
       t.string :student, null: false
+      t.integer :dni, null: false
       t.string :teacher, null: false
       t.string :mode, null: false
       t.string :program_number, null: false
