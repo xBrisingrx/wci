@@ -49,8 +49,6 @@ class CertificatesController < ApplicationController
       ]
     @nav_active = [:clients=> '', :courses=> 'active', :programs=> '']
     @certificate = Certificate.find(params[:id])
-    @start_date = convierto_fecha(@certificate.start_date)
-    @finish_date = convierto_fecha(@certificate.finish_date)
 	end
 
   def disable
@@ -87,14 +85,13 @@ class CertificatesController < ApplicationController
 
     generar_qr(id,dir)
     certificado = Rails.root.join("app/assets/images/certificates/certificados/certificado0#{n_certificado}.pdf")
-    start_date = convierto_fecha(certificate.start_date)
-    finish_date = convierto_fecha(certificate.finish_date)
+
     data = {
       'n_certificado' => certificate.number,
       'N de Programa' => certificate.program_number,
       'Proveedor' => 'Well Control International',
-      'Fecha de Finalizacion' => start_date,
-      'Fecha de Vencimiento' => finish_date,
+      'Fecha de Finalizacion' => I18n.l(certificate.start_date, format: '%d-%b-%Y' ),
+      'Fecha de Vencimiento' => I18n.l(certificate.finish_date, format: '%d-%b-%Y' ),
       'Presencial' => certificate.mode
     }
 
@@ -153,12 +150,6 @@ class CertificatesController < ApplicationController
       FileUtils.mkdir_p( dir )
       IO.binwrite("#{dir}/qr_url.png", png.to_s)
     end
-  end
-
-  def convierto_fecha fecha
-    f = I18n.l(fecha, format: '%d-%b-%Y' ).to_s.split('-')
-    f = "#{f[0]}-#{f[1].upcase}-#{f[2]}"
-    f
   end
 
 end
