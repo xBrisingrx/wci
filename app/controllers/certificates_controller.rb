@@ -128,9 +128,6 @@ class CertificatesController < ApplicationController
 
   def generar_qr id, dir
     url = url_for(action: 'get_certificado', id: id, only_path: false)
-    puts "========= URL #{url}"
-    # url['localhost'] = 'brisingr.ddns.net'
-    # url['localhost'] = "#{ENV['BASE_URL']}"
     qrcode = RQRCode::QRCode.new( url )
     png = qrcode.as_png(
       bit_depth: 1,
