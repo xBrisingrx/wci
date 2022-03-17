@@ -38,7 +38,7 @@ class CertificatesController < ApplicationController
 			generar_pdf( certificate, program.certificate ) 
 			render json: { 'status' => 'success', msg: 'Certificado generado', 'url_pdf' => mostrar_pdf_path(certificate.id)}
     else 
-      render json: { 'status' => 'error', msg: certificate.errors }
+      render json: { 'status' => 'error', errors: certificate.errors }
 		end
 	end
 
