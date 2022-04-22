@@ -66,7 +66,7 @@ class CertificatesController < ApplicationController
 
 	def show_pdf
 		certificate = Certificate.find(params[:id])
-		send_file( Rails.root.join("app/#{certificate.path}/certificado_qr.pdf"), 
+		send_file( Rails.root.join("app/#{certificate.path}"), 
                        filename: 'certificado.pdf', type: 'application/pdf', disposition: 'attachment')
 	end
 
@@ -77,12 +77,13 @@ class CertificatesController < ApplicationController
 
   def generar_pdf certificate, n_certificado
     id = certificate.id
+    nombre_certificado = "#{certificate.student.parameterize(separator: '_')}_#{certificate.program_number}.pdf"
     date = Time.new
     pdf_path = "assets/images/certificates/#{date.year}/#{date.month}/#{ certificate.id}"
-    certificate.update!(path: pdf_path)
-
+    certificate.update!(path: "#{pdf_path}/#{nombre_certificado}")
+    # aca tenemos la ruta del pdf + nombre pdf
     dir = Rails.root.join("app/#{pdf_path}")
-
+    
     generar_qr(id,dir)
     certificado = Rails.root.join("app/assets/images/certificates/certificados/certificado0#{n_certificado}.pdf")
 
@@ -123,7 +124,7 @@ class CertificatesController < ApplicationController
     canvas2.image( File.join( "#{dir}", 'qr_url.png' ), at: [220, 620], height: 80)
     canvas2.font('Helvetica', size: 8).text("#{certificate.student}", at: [345, 717])
     canvas2.font('Helvetica', size: 8).text(certificate.course, at: [340, 700])
-    doc.write("#{dir}/certificado_qr.pdf", optimize: true)
+    doc.write("#{dir}/#{nombre_certificado}", optimize: true)
   end
 
   def generar_qr id, dir
