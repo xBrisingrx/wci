@@ -66,22 +66,26 @@ class CertificatesController < ApplicationController
 
 	def show_pdf
 		certificate = Certificate.find(params[:id])
-    filename = certificate.path.split('/').last
-    # al principio no guardaba bien el nombre del certificado
-    if ( filename.split('.').last != 'pdf' )
-      file_path = "#{certificate.path}/certificado_qr.pdf"
-      filename = set_pdf_name(certificate)
-    else
+    file_path = certificate.path
+
+    if ( file_path.split('.').last != 'pdf' )
+      # si no termina como pdf es que es un certificado viejo y esta mal nombrado
+      # volvemos a generar el certificado y actualizamos la info
+      generar_pdf(certificate, certificate.program.certificate)
+      certificate = Certificate.find(params[:id])
       file_path = certificate.path
+      dir = Rails.root.join("app/#{file_path}")
     end
 
-		send_file( Rails.root.join("app/#{file_path}"), 
-                       filename: filename, type: 'application/pdf', disposition: 'attachment')
+    dir = Rails.root.join("app/#{file_path}")
+    filename = certificate.path.split('/').last
+    send_file( dir, filename: filename, type: 'application/pdf', disposition: 'attachment')
 	end
 
 	def get_certificado
 		puts 'get'
 	end
+
 
   def set_pdf_name certificate
     "#{certificate.student.parameterize(separator: '_')}_#{certificate.program_number}.pdf"
@@ -91,7 +95,7 @@ class CertificatesController < ApplicationController
     id = certificate.id
     nombre_certificado = set_pdf_name(certificate)
     date = Time.new
-    pdf_path = "assets/images/certificates/#{date.year}/#{date.month}/#{ certificate.id}"
+    pdf_path = "assets/images/certificates/#{date.year}/#{date.month}/#{certificate.id}"
     certificate.update!(path: "#{pdf_path}/#{nombre_certificado}")
     # aca tenemos la ruta del pdf + nombre pdf
     dir = Rails.root.join("app/#{pdf_path}")
