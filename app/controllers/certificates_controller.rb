@@ -69,7 +69,6 @@ class CertificatesController < ApplicationController
     file_path = certificate.path
 
     if ( file_path.split('.').last != 'pdf' )
-      puts "=========> no terimna en PDF"
       # si no termina como pdf es que es un certificado viejo y esta mal nombrado
       # volvemos a generar el certificado y actualizamos la info
       generar_pdf(certificate, certificate.program.certificate)
@@ -79,7 +78,6 @@ class CertificatesController < ApplicationController
 
     dir = Rails.root.join("app/#{file_path}")
     filename = certificate.path.split('/').last
-    puts "=========> #{filename}"
     send_file( dir, filename: filename, type: 'application/pdf', disposition: 'attachment')
 	end
 
