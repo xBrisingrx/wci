@@ -36,7 +36,7 @@ class CertificatesController < ApplicationController
 
 		if certificate.save
 			generar_pdf( certificate, program.certificate ) 
-			render json: { 'status' => 'success', msg: 'Certificado generado', 'url_pdf' => mostrar_pdf_path(certificate.id)}
+			render json: { 'status' => 'success', msg: 'Certificado generado', 'url_pdf' => mostrar_pdf_path(certificate.path)}
     else 
       render json: { 'status' => 'error', errors: certificate.errors }
 		end
@@ -66,18 +66,30 @@ class CertificatesController < ApplicationController
 
 	def show_pdf
 		certificate = Certificate.find(params[:id])
-		send_file( Rails.root.join("app/#{certificate.path}"), 
-                       filename: 'certificado.pdf', type: 'application/pdf', disposition: 'attachment')
+    filename = certificate.path.split('/').last
+    # al principio no guardaba bien el nombre del certificado
+    if ( filename.split('.').last != 'pdf' )
+      file_path = "#{certificate.path}/certificado_qr.pdf"
+      filename = set_pdf_name(certificate)
+    else
+      file_path = certificate.path
+    end
+
+		send_file( Rails.root.join("app/#{file_path}"), 
+                       filename: filename, type: 'application/pdf', disposition: 'attachment')
 	end
 
 	def get_certificado
 		puts 'get'
 	end
 
+  def set_pdf_name certificate
+    "#{certificate.student.parameterize(separator: '_')}_#{certificate.program_number}.pdf"
+  end
 
   def generar_pdf certificate, n_certificado
     id = certificate.id
-    nombre_certificado = "#{certificate.student.parameterize(separator: '_')}_#{certificate.program_number}.pdf"
+    nombre_certificado = set_pdf_name(certificate)
     date = Time.new
     pdf_path = "assets/images/certificates/#{date.year}/#{date.month}/#{ certificate.id}"
     certificate.update!(path: "#{pdf_path}/#{nombre_certificado}")
