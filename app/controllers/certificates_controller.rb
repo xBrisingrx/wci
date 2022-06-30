@@ -87,7 +87,7 @@ class CertificatesController < ApplicationController
 
 
   def set_pdf_name certificate
-    "#{certificate.student.parameterize(separator: '_')}_#{certificate.program_number}.pdf"
+    "#{certificate.student.parameterize(separator: '_')}.pdf"
   end
 
   def generar_pdf certificate, n_certificado
