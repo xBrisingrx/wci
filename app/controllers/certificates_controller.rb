@@ -36,7 +36,7 @@ class CertificatesController < ApplicationController
 
 		if certificate.save
 			generar_pdf( certificate, program.certificate ) 
-			render json: { 'status' => 'success', msg: 'Certificado generado', 'url_pdf' => mostrar_pdf_path(certificate.id)}
+			render json: { 'status' => 'success', msg: 'Certificado generado', 'url_pdf' => "/mostrar_pdf/#{certificate.id}"}
     else 
       render json: { 'status' => 'error', errors: certificate.errors }
 		end
