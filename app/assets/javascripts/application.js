@@ -52,6 +52,24 @@ function noty_alert(type, message) {
   }).show();
 }
 
+function setInputDateWithValue(_id, _date){
+  var _dat = document.querySelector(_id);
+  var d = _date.getDate(),
+      m = _date.getMonth()+1, 
+      y = _date.getFullYear(),
+      data;
+
+  if(d < 10){
+      d = "0"+d;
+  };
+  if(m < 10){
+      m = "0"+m;
+  };
+
+  data = y+"-"+m+"-"+d;
+  _dat.value = data;
+}
+
 $(window).on('load', function () {
   // initialization of header
   $.HSCore.components.HSHeader.init($('#js-header'));
