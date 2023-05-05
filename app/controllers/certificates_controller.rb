@@ -24,8 +24,8 @@ class CertificatesController < ApplicationController
 
 		certificate.student = params[:student_name]
     certificate.dni = params[:dni]
-		certificate.start_date = params[:finish_date]
-		certificate.finish_date = finish_date + 2.years
+		certificate.start_date = params[:start_date]
+		certificate.finish_date = params[:end_date]
 		certificate.teacher = params[:teacher_name]
 		certificate.course = program.name
 		certificate.program_number = program.code

@@ -13,7 +13,8 @@ function generar_certificado( seguir_cargando = false ) {
 	    },
 			body: JSON.stringify({
 				'program_id': document.querySelector('#form-certificate #program_id').value,
-				'finish_date': document.querySelector('#form-certificate #finish_date').value,
+				'start_date': document.querySelector('#form-certificate #start_date').value,
+				'end_date': document.querySelector('#form-certificate #end_date').value,
 				'student_name': document.querySelector('#form-certificate #student_name').value,
 				'dni': document.querySelector('#form-certificate #dni').value,
 				'teacher_name': document.querySelector('#form-certificate #teacher_name').value,
@@ -60,9 +61,9 @@ function validate_certificate_form(){
 		$(`#form-certificate .certificate_dni`).text( 'El dni es obligatorio' ).show('slow')
 		return false
 	}
-	if ( document.querySelector('#form-certificate #finish_date').value == '' ) {
-		$(`#form-certificate #finish_date`).addClass('is-invalid')
-		$(`#form-certificate .certificate_finish_date`).text( 'Campo obligatorio' ).show('slow')
+	if ( document.querySelector('#form-certificate #start_date').value == '' ) {
+		$(`#form-certificate #start_date`).addClass('is-invalid')
+		$(`#form-certificate .certificate_start_date`).text( 'Campo obligatorio' ).show('slow')
 		return false
 	}
 	return true
@@ -76,4 +77,10 @@ document.querySelector('#form-certificate #submit_certificado').addEventListener
 document.querySelector('#form-certificate #submit_cerrar_certificado').addEventListener('click', (e)=>{
 	e.preventDefault()
 	generar_certificado()
+})
+
+document.querySelector('#form-certificate #start_date').addEventListener('change', (e) => {
+  let start_date = new Date(e.target.value)
+  start_date.setFullYear(start_date.getFullYear() + 2 )
+  setInputDateWithValue('#end_date', start_date)
 })
