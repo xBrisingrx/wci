@@ -1,4 +1,4 @@
-$("#modal-course").html("<%= j (render 'partials/modal') %>")
+$("#modal-course").html("<%= j (render partial: 'partials/modal', locals: { size: 'lg' }) %>")
 $("#modal-course").modal('show')
 
 $('#courses-detail').DataTable({

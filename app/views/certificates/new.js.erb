@@ -1,4 +1,4 @@
-$("#modal-course").html("<%= j (render 'partials/modal') %>")
+$("#modal-course").html("<%= j (render partial: 'partials/modal', locals: { size: 'xl' }) %>")
 $('.form-select').select2({ width: '80%', theme: "bootstrap4" })
 $("#modal-course").modal('show')
 
