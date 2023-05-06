@@ -20,7 +20,6 @@ class CertificatesController < ApplicationController
 	def create
 		program = Program.find(params[:program_id])
 		certificate = Certificate.new
-		finish_date = Date.strptime(params[:finish_date],'%Y-%m-%d')
 
 		certificate.student = params[:student_name]
     certificate.dni = params[:dni]
