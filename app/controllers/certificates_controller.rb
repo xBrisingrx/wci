@@ -67,7 +67,7 @@ class CertificatesController < ApplicationController
 		certificate = Certificate.find(params[:id])
     file_path = certificate.path
 
-    if ( file_path.split('.').last != 'pdf' )
+    if ( file_path.split('.').last != 'pdf' || !File.exists?(Rails.root.join("app/#{file_path}")) )
       # si no termina como pdf es que es un certificado viejo y esta mal nombrado
       # volvemos a generar el certificado y actualizamos la info
       generar_pdf(certificate, certificate.program.certificate)
