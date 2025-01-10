@@ -32,6 +32,7 @@ class CertificatesController < ApplicationController
 		program_code = program.code.split('-').last
 		certificate.number = "WC-#{params[:dni]}-#{program_code}"
 		certificate.program_id = program.id
+    certificate.expire =  params[:expire]
 
 		if certificate.save
 			generar_pdf( certificate, program.certificate ) 
@@ -100,13 +101,13 @@ class CertificatesController < ApplicationController
     
     generar_qr(id,dir)
     certificado = Rails.root.join("app/assets/images/certificates/certificados/certificado0#{n_certificado}.pdf")
-
+    finish_date = (certificate.expire) ? I18n.l(certificate.finish_date, format: '%d-%b-%Y' ) : '--/--/----'
     data = {
       'n_certificado' => certificate.number,
       'N de Programa' => certificate.program_number,
       'Proveedor' => 'Well Control International',
       'Fecha de Finalizacion' => I18n.l(certificate.start_date, format: '%d-%b-%Y' ),
-      'Fecha de Vencimiento' => I18n.l(certificate.finish_date, format: '%d-%b-%Y' ),
+      'Fecha de Vencimiento' => finish_date,
       'Presencial' => certificate.mode
     }
 

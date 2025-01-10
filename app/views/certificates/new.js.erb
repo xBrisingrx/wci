@@ -18,7 +18,8 @@ function generar_certificado( seguir_cargando = false ) {
 				'student_name': document.querySelector('#form-certificate #student_name').value,
 				'dni': document.querySelector('#form-certificate #dni').value,
 				'teacher_name': document.querySelector('#form-certificate #teacher_name').value,
-				'course_type': document.querySelector('#form-certificate #course_type').value
+				'course_type': document.querySelector('#form-certificate #course_type').value,
+				'expire': !document.querySelector('#form-certificate #expire').checked
 			})
 		})
 		.then( response => response.json() )
@@ -83,4 +84,8 @@ document.querySelector('#form-certificate #start_date').addEventListener('change
   let start_date = new Date(e.target.value)
   start_date.setFullYear(start_date.getFullYear() + 2 )
   setInputDateWithValue('#end_date', start_date)
+})
+
+document.querySelector('#form-certificate #expire').addEventListener('change', (e) => {
+  document.querySelector('#form-certificate #end_date').disabled = e.target.checked
 })

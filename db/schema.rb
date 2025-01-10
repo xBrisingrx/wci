@@ -10,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_15_194937) do
+ActiveRecord::Schema.define(version: 2025_01_10_211343) do
 
-  create_table "certificates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "certificates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.date "start_date", null: false
     t.date "finish_date", null: false
     t.string "student", null: false
+    t.bigint "dni", null: false
     t.string "teacher", null: false
     t.string "mode", null: false
     t.string "program_number", null: false
@@ -26,10 +27,11 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "expire", default: true
     t.index ["program_id"], name: "index_certificates_on_program_id"
   end
 
-  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "cuit"
     t.string "email"
@@ -41,13 +43,13 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "countries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "countries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "course_levels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "course_levels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "comment"
     t.boolean "active", default: true
@@ -55,7 +57,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "course_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "course_students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.integer "simulation_grade", default: 0
     t.date "simulation_grade_date"
     t.integer "simulation_bh_grade", default: 0
@@ -81,7 +83,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.index ["student_id"], name: "index_course_students_on_student_id"
   end
 
-  create_table "course_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "course_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "comment"
     t.boolean "active", default: true
@@ -89,7 +91,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "courses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.date "start_date"
     t.date "finish_date"
     t.time "start_hour"
@@ -109,7 +111,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.index ["teacher_id"], name: "index_courses_on_teacher_id"
   end
 
-  create_table "programs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "programs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "code"
     t.string "name"
     t.integer "certificate"
@@ -119,7 +121,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "students", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "legajo"
     t.string "name"
     t.string "lastname"
@@ -136,7 +138,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.index ["company_id"], name: "index_students_on_company_id"
   end
 
-  create_table "teachers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "teachers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name"
     t.integer "dni"
     t.string "country"
@@ -149,7 +151,7 @@ ActiveRecord::Schema.define(version: 2022_03_15_194937) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name"
     t.string "username"
     t.string "email"
