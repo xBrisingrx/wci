@@ -101,7 +101,7 @@ class CertificatesController < ApplicationController
     
     generar_qr(id,dir)
     certificado = Rails.root.join("app/assets/images/certificates/certificados/certificado0#{n_certificado}.pdf")
-    finish_date = (certificate.expire) ? I18n.l(certificate.finish_date, format: '%d-%b-%Y' ) : 'Sin vencimiento'
+    finish_date = (certificate.expire) ? I18n.l(certificate.finish_date, format: '%d-%b-%Y' ) : 'N/A'
     data = {
       'n_certificado' => certificate.number,
       'N de Programa' => certificate.program_number,
