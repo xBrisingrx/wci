@@ -66,16 +66,24 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-    adomain: 'wellcontrol.la',
-    address:        "smtp.sendgrid.net",
-    port:            587,
-    authentication: :plain,
-    user_name:      'apikey',
-    password:       ENV['SENDGRID_API_KEY'],
+  # ActionMailer::Base.smtp_settings = {
+  #   adomain: 'wellcontrol.la',
+  #   address:        "smtp.sendgrid.net",
+  #   port:            587,
+  #   authentication: :plain,
+  #   user_name:      'apikey',
+  #   password:       ENV['SENDGRID_API_KEY'],
+  #   enable_starttls_auto: true
+  # }
+  config.action_mailer.smtp_settings = {
+    address:              ENV['EMAIL_ADDRESS'],
+    port:                 25,
+    domain:               ENV['EMAIL_DOMAIN'],
+    user_name:            ENV['EMAIL_USER'],
+    password:             ENV['EMAIL_PASSWORD'],
+    authentication:       'plain',
     enable_starttls_auto: true
   }
-
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
