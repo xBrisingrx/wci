@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'courses#index'
   resources :users
-  get "web_email", to: "web_email#contact_email"
+  post "web_email", to: "web_email#contact_email"
   resources :sessions, only: [:new, :create, :destroy]  
   get 'signup', to: 'users#new', as: 'signup'
   get 'login', to: 'sessions#new', as: 'login'

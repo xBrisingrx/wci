@@ -4,5 +4,6 @@ class WebEmailController < ApplicationController
 
   def contact_email
     ContactMailer.with(params: " ====").contact_email.deliver_later
+    render json: {data: params}
   end
 end
