@@ -66,15 +66,13 @@ Rails.application.configure do
   config.action_mailer.perform_caching = false
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:         "imutes.servidoraweb.net",
+  ActionMailer::Base.smtp_settings = {
+    adomain: 'wellcontrol.la',
+    address:        "smtp.sendgrid.net",
     port:            587,
-    domain:          "wci.la",
-    user_name:       ENV['EMAIL_USERNAME'],
-    password:        ENV['EMAIL_PASSWORD'],
-    authentication:  "plain",
-    open_timeout:    5,
-    read_timeout:    5
+    authentication: :plain,
+    user_name:      'apikey',
+    password:       ENV['SENDGRID_API_KEY']
   }
 
 
