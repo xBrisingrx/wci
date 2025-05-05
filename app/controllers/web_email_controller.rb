@@ -4,7 +4,7 @@ class WebEmailController < ApplicationController
 
   def contact_email
     email = params[:email]
-    ContactMailer.with(params: email_params, email: email).contact_email.deliver_later
+    ContactMailer.with(name: email_params[:name], email: email).contact_email.deliver_later
     render json: {data: email_params, status: 'success'}
   end
 
