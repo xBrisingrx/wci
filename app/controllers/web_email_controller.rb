@@ -5,13 +5,13 @@ class WebEmailController < ApplicationController
   def contact_email
     ContactMailer
       .with(
-        name: params[:name], 
-        email: params[:email], 
-        country: params[:country], 
-        city: params[:city], 
-        company: params[:company], 
-        comment: params[:comment], 
-        courses: params[:courses])
+        name: email_params[:name], 
+        email: email_params[:email], 
+        country: email_params[:country], 
+        city: email_params[:city], 
+        company: email_params[:company], 
+        comment: email_params[:comment], 
+        courses: email_params[:courses])
       .contact_email.deliver_later
     render json: {data: "email_params", status: 'success'}
   end
