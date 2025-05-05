@@ -5,6 +5,6 @@ class ContactMailer < ApplicationMailer
     @email = params[:email]
     @name = params[:name]
     @params = params
-    mail(to: params[:email], subject: "Mensaje desde formulario Sitio wellcontrol.la")
+    mail(to: email, subject: "Mensaje desde formulario Sitio wellcontrol.la")
   end
 end
