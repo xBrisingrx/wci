@@ -3,8 +3,17 @@ class WebEmailController < ApplicationController
   skip_before_action :no_login
 
   def contact_email
-    ContactMailer.with(name: email_params[:name], email: email_params[:email]).contact_email.deliver_later
-    render json: {data: email_params, status: 'success'}
+    ContactMailer
+      .with(
+        name: params[:name], 
+        email: params[:email], 
+        country: params[:country], 
+        city: params[:city], 
+        company: params[:company], 
+        comment: params[:comment], 
+        courses: params[:courses])
+      .contact_email.deliver_later
+    render json: {data: "email_params", status: 'success'}
   end
 
   private

@@ -1,4 +1,13 @@
-<h1>testeando wci con nombre: <%= @name %></h1>
-<p>
-  email: <%= @email %>.<br>
-</p>
+<p>Nombre: <%= @name %></p>
+<p>Telefono: <%= @phone %></p>
+<p>Email: <%= @email %></p>
+<p>Empresa: <%= @company %></p>
+<p>Cursos de interes: </p>
+<ul>
+  <% @courses.split("-").each do |course| %>
+    <li><%= course %></li>
+  <% end %>
+</ul>
+<p>Pais: <%= @country %></p>
+<p>Ciudad: <%= @city %></p>
+<p>Comentarios: <%= @comment %></p>
