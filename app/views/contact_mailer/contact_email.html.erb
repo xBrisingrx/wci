@@ -4,8 +4,8 @@
 <p>Empresa: <%= @company %></p>
 <p>Cursos de interes: </p>
 <ul>
-  <% @courses.split("-").each do |course| %>
-    <li><%= course %></li>
+  <% @courses.each do |course| %>
+    <li><%= course.strip %></li>
   <% end %>
 </ul>
 <p>Pais: <%= @country %></p>

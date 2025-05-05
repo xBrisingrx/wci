@@ -6,7 +6,8 @@ class ContactMailer < ApplicationMailer
     @email = params[:email]
     @phone = params[:phone]
     @company = params[:company]
-    @courses = params[:courses]
+    @courses = params[:courses].split("$")
+    @courses.shift
     @country = params[:country]
     @city = params[:city]
     @comment = params[:comment]
