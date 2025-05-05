@@ -2,7 +2,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://certificados.wellcontrol.la"
+    origins "https://www.wellcontrol.la"
     resource "*",
       headers: :any,
       methods: [:post],
