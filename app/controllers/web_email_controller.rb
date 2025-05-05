@@ -6,7 +6,8 @@ class WebEmailController < ApplicationController
     ContactMailer
       .with(
         name: email_params[:name], 
-        email: email_params[:email], 
+        email: email_params[:email],
+        phone: email_params[:phone],
         country: email_params[:country], 
         city: email_params[:city], 
         company: email_params[:company], 
@@ -18,6 +19,6 @@ class WebEmailController < ApplicationController
 
   private
   def email_params
-    params.require(:data).permit(:name, :email, :country, :city, :company, :comment, :courses)
+    params.require(:data).permit(:name, :email, :phone, :country, :city, :company, :comment, :courses)
   end
 end
