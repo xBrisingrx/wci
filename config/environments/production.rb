@@ -72,7 +72,9 @@ Rails.application.configure do
     domain:          "wci.la",
     user_name:       ENV['EMAIL_USERNAME'],
     password:        ENV['EMAIL_PASSWORD'],
-    authentication:  "plain"
+    authentication:  "plain",
+    open_timeout:    5,
+    read_timeout:    5
   }
 
 
