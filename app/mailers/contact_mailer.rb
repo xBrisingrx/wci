@@ -1,7 +1,9 @@
 class ContactMailer < ApplicationMailer
-  default from: "notifications@example.com"
+  default from: "soporte@maurosampaoli.com.ar"
 
   def contact_email # este email nos lo envian desde la web de webcontroll.la
-    puts params
+    @email = params[:email]
+    @name = params[:name]
+    mail(to: params[:email], subject: "Mensaje desde formulario Sitio wellcontrol.la")
   end
 end
